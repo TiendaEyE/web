@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TiendaEyE - Alimentos para Mascotas</title>
+    <title>TiendaEyE - Alimentos y Accesorios para Mascotas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -13,6 +13,8 @@
             --dark-color: #333;
             --light-color: #f4f4f4;
             --success-color: #5cb85c;
+            --cat-color: #ff9ff3;
+            --dog-color: #1dd1a1;
         }
         
         * {
@@ -33,16 +35,47 @@
             color: white;
             padding: 1rem 2rem;
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 100;
+            gap: 1rem;
+        }
+        
+        .header-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
         }
         
         h1 {
             font-size: 1.8rem;
+            margin-right: auto;
+        }
+        
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            min-width: 200px;
+            margin: 0 1rem;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.6rem 1rem;
+            border-radius: 25px;
+            border: none;
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .search-input:focus {
+            outline: 2px solid var(--secondary-color);
         }
         
         .container-icon {
@@ -169,6 +202,51 @@
             background-color: #4cae4c;
         }
         
+        /* Pestañas */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            margin: 0 0.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .tab-btn.dog {
+            background-color: var(--dog-color);
+            color: white;
+        }
+        
+        .tab-btn.cat {
+            background-color: var(--cat-color);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
         .container-items {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -182,6 +260,10 @@
             overflow: hidden;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             transition: all 0.3s;
+        }
+        
+        .item.hidden {
+            display: none;
         }
         
         .item:hover {
@@ -245,87 +327,283 @@
             color: #666;
         }
         
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+        
         @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+            
+            h1 {
+                margin-right: 0;
+                text-align: center;
+            }
+            
+            .search-container {
+                margin: 0;
+                order: 3;
+                width: 100%;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab-btn {
+                margin: 0.3rem 0;
+                width: 80%;
+                justify-content: center;
+            }
+            
             .container-items {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
                 padding: 1rem;
+                gap: 1rem;
             }
             
             .container-cart-products {
                 width: 300px;
+                right: -50px;
             }
+        }
+        
+        @media (max-width: 480px) {
+            .container-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .container-cart-products {
+                width: 280px;
+                right: -30px;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(20px); }
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            animation: fadeIn 0.3s, fadeOut 0.3s 2s forwards;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1><i class="fas fa-paw"></i> Tienda EyE</h1>
-        <div class="container-icon" id="cart-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon-cart">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-            </svg>
-            <div class="count-product">
-                <span id="contador-productos">0</span>
+        <div class="header-content">
+            <h1><i class="fas fa-paw"></i> Tienda EyE</h1>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" id="search-input" placeholder="Buscar productos...">
             </div>
+            
+            <div class="container-icon" id="cart-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon-cart">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                </svg>
+                <div class="count-product">
+                    <span id="contador-productos">0</span>
+                </div>
 
-            <div class="container-cart-products hidden-cart" id="cart-container">
-                <div id="cart-products">
-                    <!-- Productos del carrito se añadirán aquí dinámicamente -->
-                    <div class="empty-cart">
-                        <p>Tu carrito está vacío</p>
+                <div class="container-cart-products hidden-cart" id="cart-container">
+                    <div id="cart-products">
+                        <!-- Productos del carrito se añadirán aquí dinámicamente -->
+                        <div class="empty-cart">
+                            <p>Tu carrito está vacío</p>
+                        </div>
                     </div>
+                    <div class="cart-total">
+                        <h3>Total:</h3>
+                        <span class="total-pagar" id="total-pagar">0 bs</span>
+                    </div>
+                    <button class="btn-pedir" id="btn-pedir">Realizar Pedido</button>
                 </div>
-                <div class="cart-total">
-                    <h3>Total:</h3>
-                    <span class="total-pagar" id="total-pagar">0 bs</span>
-                </div>
-                <button class="btn-pedir" id="btn-pedir">Realizar Pedido</button>
             </div>
         </div>
     </header>
     
-    <div class="container-items">
-        <div class="item">
-            <figure>
-                <img src="https://d34xtejqjqcp3x.cloudfront.net/store/01e17e2ac3e642faa9a8fde21597031a.webp" alt="DOG CHOW adulto grande">
-            </figure>
-            <div class="info">
-                <h2>DOG CHOW adulto grande</h2>
-                <span class="price">350 bs</span>
-                <button class="btn-add-cart" data-id="1" data-name="DOG CHOW adulto grande" data-price="350">Añadir al carrito</button>
+    <!-- Pestañas -->
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="food">
+            <i class="fas fa-bowl-food"></i> Alimentos
+        </button>
+        <button class="tab-btn dog" data-tab="dog-accessories">
+            <i class="fas fa-dog"></i> Accesorios Perros
+        </button>
+        <button class="tab-btn cat" data-tab="cat-accessories">
+            <i class="fas fa-cat"></i> Accesorios Gatos
+        </button>
+    </div>
+    
+    <!-- Contenido de Alimentos -->
+    <div class="tab-content active" id="food">
+        <div class="container-items" id="products-container">
+            <div class="item" data-name="dog chow adulto grande">
+                <figure>
+                    <img src="https://d34xtejqjqcp3x.cloudfront.net/store/01e17e2ac3e642faa9a8fde21597031a.webp" alt="DOG CHOW adulto grande">
+                </figure>
+                <div class="info">
+                    <h2>DOG CHOW adulto grande</h2>
+                    <span class="price">350 bs</span>
+                    <button class="btn-add-cart" data-id="1" data-name="DOG CHOW adulto grande" data-price="350">Añadir al carrito</button>
+                </div>
+            </div>
+            
+            <div class="item" data-name="dog chow adulto pequeño">
+                <figure>
+                    <img src="https://www.racionya.uy/wp-content/uploads/2020/10/dog-chow-chow-dulto-raza-pequen1a.jpeg" alt="DOG CHOW adulto pequeño">
+                </figure>
+                <div class="info">
+                    <h2>DOG CHOW adulto pequeño</h2>
+                    <span class="price">350 bs</span>
+                    <button class="btn-add-cart" data-id="2" data-name="DOG CHOW adulto pequeño" data-price="350">Añadir al carrito</button>
+                </div>
+            </div>
+            
+            <div class="item" data-name="dog chow cachorro mediano-grande">
+                <figure>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNZNHBNNmCLm3jYmtD6pDz9hh7sLejIo5Hcg&s" alt="DOG CHOW cachorro mediano-grande">
+                </figure>
+                <div class="info">
+                    <h2>DOG CHOW cachorro mediano-grande</h2>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="3" data-name="DOG CHOW cachorro mediano-grande" data-price="360">Añadir al carrito</button>
+                </div>
+            </div>
+            
+            <div class="item" data-name="dog chow cachorro pequeño">
+                <figure>
+                    <img src="https://www.racionya.uy/wp-content/uploads/2020/11/Dog-Chow-Maximus-Dry-Salud-Visible-Cachorros-Minis-y-Pequenos.png" alt="DOG CHOW cachorro pequeño">
+                </figure>
+                <div class="info">
+                    <h2>DOG CHOW cachorro pequeño</h2>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="DOG CHOW cachorro pequeño" data-price="360">Añadir al carrito</button>
+                </div>
             </div>
         </div>
-        
-        <div class="item">
-            <figure>
-                <img src="https://www.racionya.uy/wp-content/uploads/2020/10/dog-chow-chow-dulto-raza-pequen1a.jpeg" alt="DOG CHOW adulto pequeño">
-            </figure>
-            <div class="info">
-                <h2>DOG CHOW adulto pequeño</h2>
-                <span class="price">350 bs</span>
-                <button class="btn-add-cart" data-id="2" data-name="DOG CHOW adulto pequeño" data-price="350">Añadir al carrito</button>
+    </div>
+    
+    <!-- Contenido de Accesorios para Perros -->
+    <div class="tab-content" id="dog-accessories">
+        <div class="container-items">
+            <div class="item" data-name="collar para perro">
+                <figure>
+                    <img src="https://m.media-amazon.com/images/I/71+UQx5z9VL._AC_UF1000,1000_QL80_.jpg" alt="Collar para perro">
+                </figure>
+                <div class="info">
+                    <h2>Collar Ajustable para Perro</h2>
+                    <span class="price">120 bs</span>
+                    <button class="btn-add-cart" data-id="5" data-name="Collar Ajustable para Perro" data-price="120">Añadir al carrito</button>
+                </div>
+            </div>
+            
+            <div class="item" data-name="correa para perro">
+                <figure>
+                    <img src="https://m.media-amazon.com/images/I/61+3+QJ0hBL._AC_UF1000,1000_QL80_.jpg" alt="Correa para perro">
+                </figure>
+                <div class="info">
+                    <h2>Correa Retráctil para Perro</h2>
+                    <span class="price">180 bs</span>
+                    <button class="btn-add-cart" data-id="6" data-name="Correa Retráctil para Perro" data-price="180">Añadir al carrito</button>
+                </div>
+            </div>
+            
+            <div class="item" data-name="juguete para perro">
+                <figure>
+                    <img src="https://m.media-amazon.com/images/I/71VX2IeQNVL._AC_UF1000,1000_QL80_.jpg" alt="Juguete para perro">
+                </figure>
+                <div class="info">
+                    <h2>Juguete Mordedor para Perro</h2>
+                    <span class="price">90 bs</span>
+                    <button class="btn-add-cart" data-id="7" data-name="Juguete Mordedor para Perro" data-price="90">Añadir al carrito</button>
+                </div>
+            </div>
+            
+            <div class="item" data-name="cama para perro">
+                <figure>
+                    <img src="https://m.media-amazon.com/images/I/81X6a+5v3BL._AC_UF1000,1000_QL80_.jpg" alt="Cama para perro">
+                </figure>
+                <div class="info">
+                    <h2>Cama Suave para Perro</h2>
+                    <span class="price">250 bs</span>
+                    <button class="btn-add-cart" data-id="8" data-name="Cama Suave para Perro" data-price="250">Añadir al carrito</button>
+                </div>
             </div>
         </div>
-        
-        <div class="item">
-            <figure>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNZNHBNNmCLm3jYmtD6pDz9hh7sLejIo5Hcg&s" alt="DOG CHOW cachorro mediano-grande">
-            </figure>
-            <div class="info">
-                <h2>DOG CHOW cachorro mediano-grande</h2>
-                <span class="price">360 bs</span>
-                <button class="btn-add-cart" data-id="3" data-name="DOG CHOW cachorro mediano-grande" data-price="360">Añadir al carrito</button>
+    </div>
+    
+    <!-- Contenido de Accesorios para Gatos -->
+    <div class="tab-content" id="cat-accessories">
+        <div class="container-items">
+            <div class="item" data-name="rascador para gato">
+                <figure>
+                    <img src="https://m.media-amazon.com/images/I/71y+4XZJNEL._AC_UF1000,1000_QL80_.jpg" alt="Rascador para gato">
+                </figure>
+                <div class="info">
+                    <h2>Rascador para Gato</h2>
+                    <span class="price">200 bs</span>
+                    <button class="btn-add-cart" data-id="9" data-name="Rascador para Gato" data-price="200">Añadir al carrito</button>
+                </div>
             </div>
-        </div>
-        
-        <div class="item">
-            <figure>
-                <img src="https://www.racionya.uy/wp-content/uploads/2020/11/Dog-Chow-Maximus-Dry-Salud-Visible-Cachorros-Minis-y-Pequenos.png" alt="DOG CHOW cachorro pequeño">
-            </figure>
-            <div class="info">
-                <h2>DOG CHOW cachorro pequeño</h2>
-                <span class="price">360 bs</span>
-                <button class="btn-add-cart" data-id="4" data-name="DOG CHOW cachorro pequeño" data-price="360">Añadir al carrito</button>
+            
+            <div class="item" data-name="juguete para gato">
+                <figure>
+                    <img src="https://m.media-amazon.com/images/I/71lH5J2QIAL._AC_UF1000,1000_QL80_.jpg" alt="Juguete para gato">
+                </figure>
+                <div class="info">
+                    <h2>Juguete con Plumas para Gato</h2>
+                    <span class="price">75 bs</span>
+                    <button class="btn-add-cart" data-id="10" data-name="Juguete con Plumas para Gato" data-price="75">Añadir al carrito</button>
+                </div>
+            </div>
+            
+            <div class="item" data-name="cama para gato">
+                <figure>
+                    <img src="https://m.media-amazon.com/images/I/81X6a+5v3BL._AC_UF1000,1000_QL80_.jpg" alt="Cama para gato">
+                </figure>
+                <div class="info">
+                    <h2>Cama Cálida para Gato</h2>
+                    <span class="price">180 bs</span>
+                    <button class="btn-add-cart" data-id="11" data-name="Cama Cálida para Gato" data-price="180">Añadir al carrito</button>
+                </div>
+            </div>
+            
+            <div class="item" data-name="comedero para gato">
+                <figure>
+                    <img src="https://m.media-amazon.com/images/I/71VX2IeQNVL._AC_UF1000,1000_QL80_.jpg" alt="Comedero para gato">
+                </figure>
+                <div class="info">
+                    <h2>Comedero Automático para Gato</h2>
+                    <span class="price">300 bs</span>
+                    <button class="btn-add-cart" data-id="12" data-name="Comedero Automático para Gato" data-price="300">Añadir al carrito</button>
+                </div>
             </div>
         </div>
     </div>
@@ -340,10 +618,15 @@
             const totalPagar = document.getElementById('total-pagar');
             const btnPedir = document.getElementById('btn-pedir');
             const btnAddToCart = document.querySelectorAll('.btn-add-cart');
+            const searchInput = document.getElementById('search-input');
+            const productsContainer = document.getElementById('products-container');
+            const allItems = document.querySelectorAll('.item');
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
             
             let cart = [];
             
-            // Mostrar/ocultar carrito - CORRECCIÓN PRINCIPAL
+            // Mostrar/ocultar carrito
             cartIcon.addEventListener('click', function(e) {
                 e.stopPropagation();
                 if (cartContainer.classList.contains('hidden-cart')) {
@@ -440,21 +723,68 @@
                 showNotification('Producto eliminado del carrito');
             }
             
+            // Función de búsqueda
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const activeTab = document.querySelector('.tab-content.active');
+                const itemsInActiveTab = activeTab.querySelectorAll('.item');
+                let hasResults = false;
+                
+                itemsInActiveTab.forEach(item => {
+                    const productName = item.getAttribute('data-name').toLowerCase();
+                    if (productName.includes(searchTerm)) {
+                        item.classList.remove('hidden');
+                        hasResults = true;
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+                
+                // Mostrar mensaje si no hay resultados
+                const noResultsElement = activeTab.querySelector('.no-results');
+                if (!hasResults) {
+                    if (!noResultsElement) {
+                        const noResults = document.createElement('div');
+                        noResults.className = 'no-results';
+                        noResults.textContent = 'No se encontraron productos que coincidan con tu búsqueda';
+                        activeTab.appendChild(noResults);
+                    }
+                } else if (noResultsElement) {
+                    noResultsElement.remove();
+                }
+            });
+            
+            // Cambio de pestañas
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Remover clase active de todos los botones y contenidos
+                    tabBtns.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Añadir clase active al botón y contenido seleccionado
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // Limpiar búsqueda al cambiar de pestaña
+                    searchInput.value = '';
+                    const itemsInActiveTab = document.getElementById(tabId).querySelectorAll('.item');
+                    itemsInActiveTab.forEach(item => item.classList.remove('hidden'));
+                    
+                    // Eliminar mensaje de no resultados si existe
+                    const noResultsElement = document.getElementById(tabId).querySelector('.no-results');
+                    if (noResultsElement) {
+                        noResultsElement.remove();
+                    }
+                });
+            });
+            
             // Mostrar notificación
             function showNotification(message) {
                 const notification = document.createElement('div');
                 notification.className = 'notification';
                 notification.textContent = message;
-                notification.style.position = 'fixed';
-                notification.style.bottom = '20px';
-                notification.style.right = '20px';
-                notification.style.backgroundColor = 'var(--primary-color)';
-                notification.style.color = 'white';
-                notification.style.padding = '10px 20px';
-                notification.style.borderRadius = '5px';
-                notification.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
-                notification.style.zIndex = '1000';
-                notification.style.animation = 'fadeIn 0.3s, fadeOut 0.3s 2s forwards';
                 
                 document.body.appendChild(notification);
                 
@@ -462,21 +792,6 @@
                     notification.remove();
                 }, 2500);
             }
-            
-            // Estilos para la animación de notificación
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: translateY(20px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                
-                @keyframes fadeOut {
-                    from { opacity: 1; transform: translateY(0); }
-                    to { opacity: 0; transform: translateY(20px); }
-                }
-            `;
-            document.head.appendChild(style);
             
             // Enviar pedido por WhatsApp
             btnPedir.addEventListener('click', function() {
