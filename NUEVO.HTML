@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TiendaEyE - Alimentos para Mascotas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4b8bbe;
+            --secondary-color: #f8c537;
+            --dark-color: #333;
+            --light-color: #f4f4f4;
+            --success-color: #5cb85c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+        }
+        
+        .container-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .icon-cart {
+            width: 30px;
+            height: 30px;
+            color: white;
+        }
+        
+        .count-product {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            width: 25px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+        
+        .container-cart-products {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: white;
+            width: 350px;
+            max-height: 500px;
+            overflow-y: auto;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            display: none;
+        }
+        
+        .hidden-cart {
+            display: none;
+        }
+        
+        .visible-cart {
+            display: block;
+        }
+        
+        .cart-product {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .info-cart-product {
+            flex: 1;
+        }
+        
+        .cantidad-producto-carrito {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .titulo-producto-carrito {
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .precio-producto-carrito {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+        
+        .icon-close {
+            width: 20px;
+            height: 20px;
+            color: #ff6b6b;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .icon-close:hover {
+            transform: scale(1.2);
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            margin-top: 1rem;
+            border-top: 2px solid var(--primary-color);
+        }
+        
+        .cart-total h3 {
+            font-size: 1.2rem;
+        }
+        
+        .total-pagar {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .btn-pedir {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-pedir:hover {
+            background-color: #4cae4c;
+        }
+        
+        .container-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+        
+        .item {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .item figure {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s;
+        }
+        
+        .item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .info {
+            padding: 1.5rem;
+        }
+        
+        .item h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .item button {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            border: none;
+            padding: 0.8rem;
+            width: 100%;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .item button:hover {
+            background-color: #e6b52e;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .container-items {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                padding: 1rem;
+            }
+            
+            .container-cart-products {
+                width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-paw"></i> Tienda EyE</h1>
+        <div class="container-icon" id="cart-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon-cart">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+            </svg>
+            <div class="count-product">
+                <span id="contador-productos">0</span>
+            </div>
+
+            <div class="container-cart-products hidden-cart" id="cart-container">
+                <div id="cart-products">
+                    <!-- Productos del carrito se añadirán aquí dinámicamente -->
+                    <div class="empty-cart">
+                        <p>Tu carrito está vacío</p>
+                    </div>
+                </div>
+                <div class="cart-total">
+                    <h3>Total:</h3>
+                    <span class="total-pagar" id="total-pagar">0 bs</span>
+                </div>
+                <button class="btn-pedir" id="btn-pedir">Realizar Pedido</button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container-items">
+        <div class="item">
+            <figure>
+                <img src="https://d34xtejqjqcp3x.cloudfront.net/store/01e17e2ac3e642faa9a8fde21597031a.webp" alt="DOG CHOW adulto grande">
+            </figure>
+            <div class="info">
+                <h2>DOG CHOW adulto grande</h2>
+                <span class="price">350 bs</span>
+                <button class="btn-add-cart" data-id="1" data-name="DOG CHOW adulto grande" data-price="350">Añadir al carrito</button>
+            </div>
+        </div>
+        
+        <div class="item">
+            <figure>
+                <img src="https://www.racionya.uy/wp-content/uploads/2020/10/dog-chow-chow-dulto-raza-pequen1a.jpeg" alt="DOG CHOW adulto pequeño">
+            </figure>
+            <div class="info">
+                <h2>DOG CHOW adulto pequeño</h2>
+                <span class="price">350 bs</span>
+                <button class="btn-add-cart" data-id="2" data-name="DOG CHOW adulto pequeño" data-price="350">Añadir al carrito</button>
+            </div>
+        </div>
+        
+        <div class="item">
+            <figure>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNZNHBNNmCLm3jYmtD6pDz9hh7sLejIo5Hcg&s" alt="DOG CHOW cachorro mediano-grande">
+            </figure>
+            <div class="info">
+                <h2>DOG CHOW cachorro mediano-grande</h2>
+                <span class="price">360 bs</span>
+                <button class="btn-add-cart" data-id="3" data-name="DOG CHOW cachorro mediano-grande" data-price="360">Añadir al carrito</button>
+            </div>
+        </div>
+        
+        <div class="item">
+            <figure>
+                <img src="https://www.racionya.uy/wp-content/uploads/2020/11/Dog-Chow-Maximus-Dry-Salud-Visible-Cachorros-Minis-y-Pequenos.png" alt="DOG CHOW cachorro pequeño">
+            </figure>
+            <div class="info">
+                <h2>DOG CHOW cachorro pequeño</h2>
+                <span class="price">360 bs</span>
+                <button class="btn-add-cart" data-id="4" data-name="DOG CHOW cachorro pequeño" data-price="360">Añadir al carrito</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Variables
+            const cartIcon = document.getElementById('cart-icon');
+            const cartContainer = document.getElementById('cart-container');
+            const cartProducts = document.getElementById('cart-products');
+            const countProducts = document.getElementById('contador-productos');
+            const totalPagar = document.getElementById('total-pagar');
+            const btnPedir = document.getElementById('btn-pedir');
+            const btnAddToCart = document.querySelectorAll('.btn-add-cart');
+            
+            let cart = [];
+            
+            // Mostrar/ocultar carrito - CORRECCIÓN PRINCIPAL
+            cartIcon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (cartContainer.classList.contains('hidden-cart')) {
+                    cartContainer.classList.remove('hidden-cart');
+                    cartContainer.classList.add('visible-cart');
+                } else {
+                    cartContainer.classList.add('hidden-cart');
+                    cartContainer.classList.remove('visible-cart');
+                }
+            });
+            
+            // Cerrar carrito al hacer clic fuera
+            document.addEventListener('click', function(e) {
+                if (!cartContainer.contains(e.target) && e.target !== cartIcon && !cartIcon.contains(e.target)) {
+                    cartContainer.classList.add('hidden-cart');
+                    cartContainer.classList.remove('visible-cart');
+                }
+            });
+            
+            // Añadir productos al carrito
+            btnAddToCart.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name');
+                    const price = parseFloat(this.getAttribute('data-price'));
+                    
+                    // Verificar si el producto ya está en el carrito
+                    const existingProduct = cart.find(item => item.id === id);
+                    
+                    if (existingProduct) {
+                        existingProduct.quantity += 1;
+                    } else {
+                        cart.push({
+                            id,
+                            name,
+                            price,
+                            quantity: 1
+                        });
+                    }
+                    
+                    updateCart();
+                    showNotification('Producto añadido al carrito');
+                });
+            });
+            
+            // Actualizar carrito
+            function updateCart() {
+                // Actualizar contador
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                countProducts.textContent = totalItems;
+                
+                // Actualizar lista de productos
+                if (cart.length === 0) {
+                    cartProducts.innerHTML = '<div class="empty-cart"><p>Tu carrito está vacío</p></div>';
+                    btnPedir.style.display = 'none';
+                } else {
+                    cartProducts.innerHTML = '';
+                    cart.forEach(item => {
+                        const productElement = document.createElement('div');
+                        productElement.className = 'cart-product';
+                        productElement.innerHTML = `
+                            <div class="info-cart-product">
+                                <span class="cantidad-producto-carrito">${item.quantity}</span>
+                                <p class="titulo-producto-carrito">${item.name}</p>
+                                <span class="precio-producto-carrito">${(item.price * item.quantity).toFixed(2)} bs</span>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="icon-close" data-id="${item.id}">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                        `;
+                        cartProducts.appendChild(productElement);
+                    });
+                    
+                    btnPedir.style.display = 'block';
+                }
+                
+                // Actualizar total
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                totalPagar.textContent = `${total.toFixed(2)} bs`;
+                
+                // Añadir eventos a los botones de eliminar
+                document.querySelectorAll('.icon-close').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = this.getAttribute('data-id');
+                        removeFromCart(id);
+                    });
+                });
+            }
+            
+            // Eliminar producto del carrito
+            function removeFromCart(id) {
+                cart = cart.filter(item => item.id !== id);
+                updateCart();
+                showNotification('Producto eliminado del carrito');
+            }
+            
+            // Mostrar notificación
+            function showNotification(message) {
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.textContent = message;
+                notification.style.position = 'fixed';
+                notification.style.bottom = '20px';
+                notification.style.right = '20px';
+                notification.style.backgroundColor = 'var(--primary-color)';
+                notification.style.color = 'white';
+                notification.style.padding = '10px 20px';
+                notification.style.borderRadius = '5px';
+                notification.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+                notification.style.zIndex = '1000';
+                notification.style.animation = 'fadeIn 0.3s, fadeOut 0.3s 2s forwards';
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 2500);
+            }
+            
+            // Estilos para la animación de notificación
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(20px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                
+                @keyframes fadeOut {
+                    from { opacity: 1; transform: translateY(0); }
+                    to { opacity: 0; transform: translateY(20px); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Enviar pedido por WhatsApp
+            btnPedir.addEventListener('click', function() {
+                if (cart.length === 0) return;
+                
+                let message = '¡Hola! Quiero realizar el siguiente pedido:\n\n';
+                
+                cart.forEach(item => {
+                    message += `- ${item.name} (${item.quantity} x ${item.price} bs) = ${(item.quantity * item.price).toFixed(2)} bs\n`;
+                });
+                
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                message += `\n*Total a pagar: ${total.toFixed(2)} bs*`;
+                message += '\n\nPor favor, confirmen mi pedido. ¡Gracias!';
+                
+                const phoneNumber = '+59177802579';
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                
+                window.open(whatsappUrl, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
