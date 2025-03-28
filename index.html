@@ -8,13 +8,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #4b8bbe;
+            --primary-color: #50d43f;
             --secondary-color: #f8c537;
             --dark-color: #333;
             --light-color: #f4f4f4;
             --success-color: #5cb85c;
             --cat-color: #ff9ff3;
             --dog-color: #1dd1a1;
+            --food-color: #5e60d1;
+            --tiktok-color: #000000;
+            --facebook-color: #1877f2;
+            --instagram-color: #e4405f;
         }
         
         * {
@@ -28,6 +32,23 @@
             background-color: #f9f9f9;
             color: var(--dark-color);
             line-height: 1.6;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://scontent.fvvi1-2.fna.fbcdn.net/v/t39.30808-6/353008046_661878539294080_2691523156726765628_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=05WEHg0MvscQ7kNvgFOUbgl&_nc_oc=AdmTxT4lUHHrnVm3apKo8WM02CbTrWnL-JlKjiyEBaT1f8whCqkX5XYtdrr7HMMmad8&_nc_zt=23&_nc_ht=scontent.fvvi1-2.fna&_nc_gid=5VxgUl2991U498JmjhPaVQ&oh=00_AYEzdSLuD4dQFH-tbCxcRBVYueinN1l989JySKidYoyx1w&oe=67EC04F7');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 30%;
+            opacity: 0.1;
+            z-index: -1;
+            pointer-events: none;
         }
         
         header {
@@ -239,6 +260,16 @@
             color: white;
         }
         
+        .tab-btn.dog-food {
+            background-color: var(--food-color);
+            color: var(--dark-color);
+        }
+        
+        .tab-btn.cat-food {
+            background-color: var(--food-color);
+            color: var(--dark-color);
+        }
+        
         .tab-content {
             display: none;
         }
@@ -252,6 +283,8 @@
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 2rem;
             padding: 2rem;
+            position: relative;
+            z-index: 1;
         }
         
         .item {
@@ -334,6 +367,77 @@
             color: #666;
         }
         
+        /* Botón flotante de redes sociales */
+        .social-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+        }
+        
+        .social-main-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        .social-main-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .social-networks {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .social-networks.active {
+            display: flex;
+            animation: fadeIn 0.3s;
+        }
+        
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tiktok-btn {
+            background-color: var(--tiktok-color);
+        }
+        
+        .facebook-btn {
+            background-color: var(--facebook-color);
+        }
+        
+        .instagram-btn {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+        
         @media (max-width: 768px) {
             header {
                 padding: 1rem;
@@ -377,6 +481,15 @@
                 width: 300px;
                 right: -50px;
             }
+            
+            .social-float {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            body::before {
+                background-size: 50%;
+            }
         }
         
         @media (max-width: 480px) {
@@ -387,6 +500,22 @@
             .container-cart-products {
                 width: 280px;
                 right: -30px;
+            }
+            
+            .social-main-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            .social-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            body::before {
+                background-size: 70%;
             }
         }
         
@@ -450,19 +579,22 @@
     
     <!-- Pestañas -->
     <div class="tabs">
-        <button class="tab-btn active" data-tab="food">
-            <i class="fas fa-bowl-food"></i> Alimentos
+        <button class="tab-btn dog-food active" data-tab="dog-food">
+            <i class="fas fa-dog"></i> Alimento Perros
+        </button>
+        <button class="tab-btn cat-food" data-tab="cat-food">
+            <i class="fas fa-cat"></i> Alimento Gatos
         </button>
         <button class="tab-btn dog" data-tab="dog-accessories">
-            <i class="fas fa-dog"></i> Accesorios Perros
+            <i class="fas fa-bone"></i> Accesorios Perros
         </button>
         <button class="tab-btn cat" data-tab="cat-accessories">
-            <i class="fas fa-cat"></i> Accesorios Gatos
+            <i class="fas fa-paw"></i> Accesorios Gatos
         </button>
     </div>
     
-    <!-- Contenido de Alimentos -->
-    <div class="tab-content active" id="food">
+    <!-- Contenido de Alimentos para Perros -->
+    <div class="tab-content active" id="dog-food">
         <div class="container-items" id="products-container">
             <div class="item" data-name="dog chow adulto grande">
                 <figure>
@@ -505,6 +637,55 @@
                     <h2>DOG CHOW cachorro pequeño</h2>
                     <span class="price">360 bs</span>
                     <button class="btn-add-cart" data-id="4" data-name="DOG CHOW cachorro pequeño" data-price="360">Añadir al carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Contenido de Alimentos para Gatos -->
+    <div class="tab-content" id="cat-food">
+        <div class="container-items">
+            <div class="item" data-name="whiskas adulto">
+                <figure>
+                    <img src="https://www.whiskas.es/wp-content/uploads/2020/07/whiskas-producto-1-7kg.png" alt="Whiskas para gato adulto">
+                </figure>
+                <div class="info">
+                    <h2>WHISKAS Adulto</h2>
+                    <span class="price">320 bs</span>
+                    <button class="btn-add-cart" data-id="13" data-name="WHISKAS Adulto" data-price="320">Añadir al carrito</button>
+                </div>
+            </div>
+            
+            <div class="item" data-name="whiskas cachorro">
+                <figure>
+                    <img src="https://www.whiskas.es/wp-content/uploads/2020/07/whiskas-producto-1-7kg.png" alt="Whiskas para gato cachorro">
+                </figure>
+                <div class="info">
+                    <h2>WHISKAS Cachorro</h2>
+                    <span class="price">340 bs</span>
+                    <button class="btn-add-cart" data-id="14" data-name="WHISKAS Cachorro" data-price="340">Añadir al carrito</button>
+                </div>
+            </div>
+            
+            <div class="item" data-name="cat chow adulto">
+                <figure>
+                    <img src="https://www.purina-latam.com/sites/g/files/auxxlc391/files/styles/social_share_large/public/2020-11/purina-cat-chow-adulto.png" alt="Cat Chow adulto">
+                </figure>
+                <div class="info">
+                    <h2>CAT CHOW Adulto</h2>
+                    <span class="price">380 bs</span>
+                    <button class="btn-add-cart" data-id="15" data-name="CAT CHOW Adulto" data-price="380">Añadir al carrito</button>
+                </div>
+            </div>
+            
+            <div class="item" data-name="cat chow cachorro">
+                <figure>
+                    <img src="https://www.purina-latam.com/sites/g/files/auxxlc391/files/styles/social_share_large/public/2020-11/purina-cat-chow-gatitos.png" alt="Cat Chow cachorro">
+                </figure>
+                <div class="info">
+                    <h2>CAT CHOW Cachorro</h2>
+                    <span class="price">400 bs</span>
+                    <button class="btn-add-cart" data-id="16" data-name="CAT CHOW Cachorro" data-price="400">Añadir al carrito</button>
                 </div>
             </div>
         </div>
@@ -608,6 +789,24 @@
         </div>
     </div>
 
+    <!-- Botón flotante de redes sociales -->
+    <div class="social-float">
+        <div class="social-networks" id="social-networks">
+            <a href="https://www.tiktok.com/@lexericka?lang=es" target="_blank" class="social-btn tiktok-btn">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=100064158181876" target="_blank" class="social-btn facebook-btn">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/lexericka/" target="_blank" class="social-btn instagram-btn">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+        <div class="social-main-btn" id="social-main-btn">
+            <i class="fas fa-share-alt"></i>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Variables
@@ -623,6 +822,8 @@
             const allItems = document.querySelectorAll('.item');
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
+            const socialMainBtn = document.getElementById('social-main-btn');
+            const socialNetworks = document.getElementById('social-networks');
             
             let cart = [];
             
@@ -643,6 +844,19 @@
                 if (!cartContainer.contains(e.target) && e.target !== cartIcon && !cartIcon.contains(e.target)) {
                     cartContainer.classList.add('hidden-cart');
                     cartContainer.classList.remove('visible-cart');
+                }
+            });
+            
+            // Mostrar/ocultar redes sociales
+            socialMainBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                socialNetworks.classList.toggle('active');
+            });
+            
+            // Cerrar redes sociales al hacer clic fuera
+            document.addEventListener('click', function(e) {
+                if (!socialNetworks.contains(e.target) && e.target !== socialMainBtn && !socialMainBtn.contains(e.target)) {
+                    socialNetworks.classList.remove('active');
                 }
             });
             
