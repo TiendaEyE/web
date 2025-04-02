@@ -51,6 +51,7 @@
             pointer-events: none;
         }
         
+        /* Header Styles */
         header {
             background-color: var(--primary-color);
             color: white;
@@ -99,6 +100,7 @@
             outline: 2px solid var(--secondary-color);
         }
         
+        /* Cart Styles */
         .container-icon {
             position: relative;
             cursor: pointer;
@@ -223,7 +225,7 @@
             background-color: #4cae4c;
         }
         
-        /* Pestañas */
+        /* Tabs Styles */
         .tabs {
             display: flex;
             justify-content: center;
@@ -278,6 +280,7 @@
             display: block;
         }
         
+        /* Products Grid */
         .container-items {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -324,10 +327,49 @@
             padding: 1.5rem;
         }
         
+        .info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
         .item h2 {
             font-size: 1.2rem;
-            margin-bottom: 0.5rem;
             color: var(--dark-color);
+            margin: 0;
+        }
+        
+        .info-icon {
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .info-icon:hover {
+            transform: scale(1.1);
+        }
+        
+        .ingredients-info {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            margin-top: 0.5rem;
+        }
+        
+        .ingredients-info.active {
+            max-height: 500px;
+            padding: 0.5rem;
+            border: 1px solid #eee;
+        }
+        
+        .ingredients-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #555;
         }
         
         .price {
@@ -365,9 +407,10 @@
             text-align: center;
             padding: 2rem;
             color: #666;
+            display: none;
         }
         
-        /* Botón flotante de redes sociales */
+        /* Social Float Button */
         .social-float {
             position: fixed;
             bottom: 30px;
@@ -438,6 +481,90 @@
             background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
         }
         
+        /* Navigation Links */
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 250px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .dropdown-content a {
+            color: var(--dark-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .sucursal-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .sucursal-direccion {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(20px); }
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            animation: fadeIn 0.3s, fadeOut 0.3s 2s forwards;
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
             header {
                 padding: 1rem;
@@ -518,40 +645,35 @@
                 background-size: 70%;
             }
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes fadeOut {
-            from { opacity: 1; transform: translateY(0); }
-            to { opacity: 0; transform: translateY(20px); }
-        }
-        
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1000;
-            animation: fadeIn 0.3s, fadeOut 0.3s 2s forwards;
-        }
     </style>
 </head>
 <body>
     <header>
         <div class="header-content">
             <h1><i class="fas fa-paw"></i> Tienda EyE</h1>
-            
+
             <div class="search-container">
                 <input type="text" class="search-input" id="search-input" placeholder="Buscar productos...">
             </div>
-            
+
+            <div class="dropdown">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-map-marker-alt"></i> Sucursales
+                </a>
+                <div class="dropdown-content">
+                    <a href="sucursal.html?branch=1">
+                        <div class="sucursal-title">Mercadito 2 de Agosto</div>
+                        <div class="sucursal-direccion">Av. 2 de Agosto, Santa Cruz</div>
+                    </a>
+                    <a href="sucursal.html?branch=2">
+                        <div class="sucursal-title">Av. Luján</div>
+                        <div class="sucursal-direccion">Av. San Martín, Santa Cruz</div>
+                    </a>
+                </div>
+            </div>
+
+            <a href="historial.html" class="nav-link">Historial</a>
+
             <div class="container-icon" id="cart-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon-cart">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
@@ -601,7 +723,13 @@
                     <img src="https://d34xtejqjqcp3x.cloudfront.net/store/01e17e2ac3e642faa9a8fde21597031a.webp" alt="DOG CHOW adulto grande">
                 </figure>
                 <div class="info">
-                    <h2>DOG CHOW adulto grande</h2>
+                    <div class="info-header">
+                        <h2>DOG CHOW adulto grande</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="dog-chow-adulto-grande"></i>
+                    </div>
+                    <div class="ingredients-info" id="dog-chow-adulto-grande">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
                     <span class="price">350 bs</span>
                     <button class="btn-add-cart" data-id="1" data-name="DOG CHOW adulto grande" data-price="350">Añadir al carrito</button>
                 </div>
@@ -612,7 +740,13 @@
                     <img src="https://www.racionya.uy/wp-content/uploads/2020/10/dog-chow-chow-dulto-raza-pequen1a.jpeg" alt="DOG CHOW adulto pequeño">
                 </figure>
                 <div class="info">
-                    <h2>DOG CHOW adulto pequeño</h2>
+                    <div class="info-header">
+                        <h2>DOG CHOW adulto pequeño</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="dog-chow-adulto-pequeño"></i>
+                    </div>
+                    <div class="ingredients-info" id="dog-chow-adulto-pequeño">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
                     <span class="price">350 bs</span>
                     <button class="btn-add-cart" data-id="2" data-name="DOG CHOW adulto pequeño" data-price="350">Añadir al carrito</button>
                 </div>
@@ -623,7 +757,13 @@
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNZNHBNNmCLm3jYmtD6pDz9hh7sLejIo5Hcg&s" alt="DOG CHOW cachorro mediano-grande">
                 </figure>
                 <div class="info">
-                    <h2>DOG CHOW cachorro mediano-grande</h2>
+                    <div class="info-header">
+                        <h2>DOG CHOW cachorro mediano-grande</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="dog-chow-cachorro-mediano-grande"></i>
+                    </div>
+                    <div class="ingredients-info" id="dog-chow-cachorro-mediano-grande">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
                     <span class="price">360 bs</span>
                     <button class="btn-add-cart" data-id="3" data-name="DOG CHOW cachorro mediano-grande" data-price="360">Añadir al carrito</button>
                 </div>
@@ -634,400 +774,763 @@
                     <img src="https://www.racionya.uy/wp-content/uploads/2020/11/Dog-Chow-Maximus-Dry-Salud-Visible-Cachorros-Minis-y-Pequenos.png" alt="DOG CHOW cachorro pequeño">
                 </figure>
                 <div class="info">
-                    <h2>DOG CHOW cachorro pequeño</h2>
+                    <div class="info-header">
+                        <h2>DOG CHOW cachorro pequeño</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="dog-chow-cachorro-pequeño"></i>
+                    </div>
+                    <div class="ingredients-info" id="dog-chow-cachorro-pequeño">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
                     <span class="price">360 bs</span>
                     <button class="btn-add-cart" data-id="4" data-name="DOG CHOW cachorro pequeño" data-price="360">Añadir al carrito</button>
                 </div>
             </div>
-        </div>
-    </div>
-    
-    <!-- Contenido de Alimentos para Gatos -->
-    <div class="tab-content" id="cat-food">
-        <div class="container-items">
-            <div class="item" data-name="whiskas adulto">
+            
+            <div class="item" data-name="Cibau (adulto raza grande)">
                 <figure>
-                    <img src="https://www.whiskas.es/wp-content/uploads/2020/07/whiskas-producto-1-7kg.png" alt="Whiskas para gato adulto">
+                    <img src="imagenes/cibau adulto.jpg" alt="Cibau (adulto raza grande)">
                 </figure>
                 <div class="info">
-                    <h2>WHISKAS Adulto</h2>
-                    <span class="price">320 bs</span>
-                    <button class="btn-add-cart" data-id="13" data-name="WHISKAS Adulto" data-price="320">Añadir al carrito</button>
+                    <div class="info-header">
+                        <h2>Cibau (adulto raza grande)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Cibau (adulto raza grande)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Cibau (adulto raza grande)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Cibau (adulto raza grande)" data-price="360">Añadir al carrito</button>
                 </div>
             </div>
             
-            <div class="item" data-name="whiskas cachorro">
+            <div class="item" data-name="Cibau (adulto raza mediana)">
                 <figure>
-                    <img src="https://www.whiskas.es/wp-content/uploads/2020/07/whiskas-producto-1-7kg.png" alt="Whiskas para gato cachorro">
+                    <img src="imagenes/cibau adulto mediano.jpg" alt="Cibau (adulto raza mediana)">
                 </figure>
                 <div class="info">
-                    <h2>WHISKAS Cachorro</h2>
-                    <span class="price">340 bs</span>
-                    <button class="btn-add-cart" data-id="14" data-name="WHISKAS Cachorro" data-price="340">Añadir al carrito</button>
+                    <div class="info-header">
+                        <h2>Cibau (adulto raza mediana)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Cibau (adulto raza mediana)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Cibau (adulto raza mediana)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Cibau (adulto raza mediana)" data-price="360">Añadir al carrito</button>
                 </div>
             </div>
             
-            <div class="item" data-name="cat chow adulto">
+            <div class="item" data-name="Cibau (adulto raza pequeña)">
                 <figure>
-                    <img src="https://www.purina-latam.com/sites/g/files/auxxlc391/files/styles/social_share_large/public/2020-11/purina-cat-chow-adulto.png" alt="Cat Chow adulto">
+                    <img src="imagenes/cibau adulto pequeño.jpg" alt="Cibau (adulto raza pequeña)">
                 </figure>
                 <div class="info">
-                    <h2>CAT CHOW Adulto</h2>
-                    <span class="price">380 bs</span>
-                    <button class="btn-add-cart" data-id="15" data-name="CAT CHOW Adulto" data-price="380">Añadir al carrito</button>
+                    <div class="info-header">
+                        <h2>Cibau (adulto raza pequeña)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Cibau (adulto raza pequeña)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Cibau (adulto raza pequeña)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Cibau (adulto raza pequeña)" data-price="360">Añadir al carrito</button>
                 </div>
             </div>
             
-            <div class="item" data-name="cat chow cachorro">
+            <div class="item" data-name="Cibau (cachorro raza grande)">
                 <figure>
-                    <img src="https://www.purina-latam.com/sites/g/files/auxxlc391/files/styles/social_share_large/public/2020-11/purina-cat-chow-gatitos.png" alt="Cat Chow cachorro">
+                    <img src="imagenes/cibau cachorro grande.jpg" alt="Cibau (cachorro raza grande)">
                 </figure>
                 <div class="info">
-                    <h2>CAT CHOW Cachorro</h2>
-                    <span class="price">400 bs</span>
-                    <button class="btn-add-cart" data-id="16" data-name="CAT CHOW Cachorro" data-price="400">Añadir al carrito</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Contenido de Accesorios para Perros -->
-    <div class="tab-content" id="dog-accessories">
-        <div class="container-items">
-            <div class="item" data-name="collar para perro">
-                <figure>
-                    <img src="https://m.media-amazon.com/images/I/71+UQx5z9VL._AC_UF1000,1000_QL80_.jpg" alt="Collar para perro">
-                </figure>
-                <div class="info">
-                    <h2>Collar Ajustable para Perro</h2>
-                    <span class="price">120 bs</span>
-                    <button class="btn-add-cart" data-id="5" data-name="Collar Ajustable para Perro" data-price="120">Añadir al carrito</button>
+                    <div class="info-header">
+                        <h2>Cibau (cachorro raza grande)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Cibau (cachorro raza grande)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Cibau (cachorro raza grande)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Cibau (cachorro raza grande)" data-price="360">Añadir al carrito</button>
                 </div>
             </div>
             
-            <div class="item" data-name="correa para perro">
+            <div class="item" data-name="Cibau (cachorro raza mediana)">
                 <figure>
-                    <img src="https://m.media-amazon.com/images/I/61+3+QJ0hBL._AC_UF1000,1000_QL80_.jpg" alt="Correa para perro">
+                    <img src="imagenes/cibaucachorro mediano.jpg" alt="Cibau (cachorro raza mediana)">
                 </figure>
                 <div class="info">
-                    <h2>Correa Retráctil para Perro</h2>
-                    <span class="price">180 bs</span>
-                    <button class="btn-add-cart" data-id="6" data-name="Correa Retráctil para Perro" data-price="180">Añadir al carrito</button>
+                    <div class="info-header">
+                        <h2>Cibau (cachorro raza mediana)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Cibau (cachorro raza mediana)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Cibau (cachorro raza mediana)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Cibau (cachorro raza mediana)" data-price="360">Añadir al carrito</button>
                 </div>
             </div>
             
-            <div class="item" data-name="juguete para perro">
+            <div class="item" data-name="Cibau (cachorro raza pequeña)">
                 <figure>
-                    <img src="https://m.media-amazon.com/images/I/71VX2IeQNVL._AC_UF1000,1000_QL80_.jpg" alt="Juguete para perro">
+                    <img src="imagenes/cibau cachorro pequeño.jpg" alt="Cibau (cachorro raza pequeña)">
                 </figure>
                 <div class="info">
-                    <h2>Juguete Mordedor para Perro</h2>
-                    <span class="price">90 bs</span>
-                    <button class="btn-add-cart" data-id="7" data-name="Juguete Mordedor para Perro" data-price="90">Añadir al carrito</button>
+                    <div class="info-header">
+                        <h2>Cibau (cachorro raza pequeña)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Cibau (cachorro raza pequeña)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Cibau (cachorro raza pequeña)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Cibau (cachorro raza pequeña)" data-price="360">Añadir al carrito</button>
                 </div>
             </div>
             
-            <div class="item" data-name="cama para perro">
+            <div class="item" data-name="Ecopet (adulto sabor pollo)">
                 <figure>
-                    <img src="https://m.media-amazon.com/images/I/81X6a+5v3BL._AC_UF1000,1000_QL80_.jpg" alt="Cama para perro">
+                    <img src="imagenes/ecopet adulto pollo.jpg" alt="Ecopet (adulto sabor pollo)">
                 </figure>
                 <div class="info">
-                    <h2>Cama Suave para Perro</h2>
-                    <span class="price">250 bs</span>
-                    <button class="btn-add-cart" data-id="8" data-name="Cama Suave para Perro" data-price="250">Añadir al carrito</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Contenido de Accesorios para Gatos -->
-    <div class="tab-content" id="cat-accessories">
-        <div class="container-items">
-            <div class="item" data-name="rascador para gato">
-                <figure>
-                    <img src="https://m.media-amazon.com/images/I/71y+4XZJNEL._AC_UF1000,1000_QL80_.jpg" alt="Rascador para gato">
-                </figure>
-                <div class="info">
-                    <h2>Rascador para Gato</h2>
-                    <span class="price">200 bs</span>
-                    <button class="btn-add-cart" data-id="9" data-name="Rascador para Gato" data-price="200">Añadir al carrito</button>
+                    <div class="info-header">
+                        <h2>Ecopet (adulto sabor pollo)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Ecopet (adulto sabor pollo)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Ecopet (adulto sabor pollo)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Ecopet (adulto sabor pollo)" data-price="360">Añadir al carrito</button>
                 </div>
             </div>
             
-            <div class="item" data-name="juguete para gato">
+            <div class="item" data-name="Ecopet (adulto sabor carne)">
                 <figure>
-                    <img src="https://m.media-amazon.com/images/I/71lH5J2QIAL._AC_UF1000,1000_QL80_.jpg" alt="Juguete para gato">
+                    <img src="imagenes/ecopet adulto carne.jpg" alt="Ecopet (adulto sabor carne)">
                 </figure>
                 <div class="info">
-                    <h2>Juguete con Plumas para Gato</h2>
-                    <span class="price">75 bs</span>
-                    <button class="btn-add-cart" data-id="10" data-name="Juguete con Plumas para Gato" data-price="75">Añadir al carrito</button>
+                    <div class="info-header">
+                        <h2>Ecopet (adulto sabor carne)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Ecopet (adulto sabor carne)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Ecopet (adulto sabor carne)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Ecopet (adulto sabor carne)" data-price="360">Añadir al carrito</button>
                 </div>
             </div>
             
-            <div class="item" data-name="cama para gato">
+            <div class="item" data-name="Ecopet (cachorro)">
                 <figure>
-                    <img src="https://m.media-amazon.com/images/I/81X6a+5v3BL._AC_UF1000,1000_QL80_.jpg" alt="Cama para gato">
+                    <img src="imagenes/ecopet cachorro .jpg" alt="Ecopet (cachorro)">
                 </figure>
                 <div class="info">
-                    <h2>Cama Cálida para Gato</h2>
-                    <span class="price">180 bs</span>
-                    <button class="btn-add-cart" data-id="11" data-name="Cama Cálida para Gato" data-price="180">Añadir al carrito</button>
+                    <div class="info-header">
+                        <h2>Ecopet (cachorro)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Ecopet (cachorro)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Ecopet (cachorro)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Ecopet (cachorro)" data-price="360">Añadir al carrito</button>
                 </div>
             </div>
             
-            <div class="item" data-name="comedero para gato">
+            <div class="item" data-name="Mican (adulto sabor carne)">
                 <figure>
-                    <img src="https://m.media-amazon.com/images/I/71VX2IeQNVL._AC_UF1000,1000_QL80_.jpg" alt="Comedero para gato">
+                    <img src="imagenes/mican adulto carne.jpg" alt="Mican (adulto sabor carne)">
                 </figure>
                 <div class="info">
-                    <h2>Comedero Automático para Gato</h2>
-                    <span class="price">300 bs</span>
-                    <button class="btn-add-cart" data-id="12" data-name="Comedero Automático para Gato" data-price="300">Añadir al carrito</button>
+                    <div class="info-header">
+                        <h2>Mican (adulto sabor carne)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Mican (adulto sabor carne)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Mican (adulto sabor carne)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Mican (adulto sabor carne)" data-price="360">Añadir al carrito</button>
                 </div>
             </div>
-        </div>
-    </div>
+            
+            <div class="item" data-name="Mican (adulto sabor pollo)">
+                <figure>
+                    <img src="imagenes/mican adulto pollo.jpg" alt="Mican (adulto sabor pollo)">
+                </figure>
+                <div class="info">
+                    <div class="info-header">
+                        <h2>Mican (adulto sabor pollo)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Mican (adulto sabor pollo)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Mican (adulto sabor pollo)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Mican (adulto sabor pollo)" data-price="360">Añadir al carrito</button>
+                </div>
+            </div>
+            <div class="item" data-name="Mican (cachorro)">
+                <figure>
+                    <img src="imagenes/mican cachorro.jpg" alt="Mican (cachorro)">
+                </figure>
+                <div class="info">
+                    <div class="info-header">
+                        <h2>Mican (cachorro)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Mican (cachorro)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Mican (cachorro)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Mican (cachorro)" data-price="360">Añadir al carrito</button>
+                </div>
+            </div>
 
-    <!-- Botón flotante de redes sociales -->
-    <div class="social-float">
-        <div class="social-networks" id="social-networks">
-            <a href="https://www.tiktok.com/@lexericka?lang=es" target="_blank" class="social-btn tiktok-btn">
-                <i class="fab fa-tiktok"></i>
-            </a>
-            <a href="https://www.facebook.com/profile.php?id=100064158181876" target="_blank" class="social-btn facebook-btn">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="https://www.instagram.com/lexericka/" target="_blank" class="social-btn instagram-btn">
-                <i class="fab fa-instagram"></i>
-            </a>
-        </div>
-        <div class="social-main-btn" id="social-main-btn">
-            <i class="fas fa-share-alt"></i>
+            <div class="no-results">
+                <p>No se encontraron productos que coincidan con tu búsqueda</p>
+            </div>
         </div>
     </div>
+    
+        <!-- Contenido de Alimentos para Gatos -->
+        <div class="tab-content" id="cat-food">
+            <div class="container-items">
+                <div class="item" data-name="whiskas adulto">
+                    <figure>
+                        <img src="https://www.whiskas.es/wp-content/uploads/2020/07/whiskas-producto-1-7kg.png" alt="Whiskas para gato adulto">
+                    </figure>
+                    <div class="info">
+                        <div class="info-header">
+                            <h2>WHISKAS Adulto</h2>
+                            <i class="fas fa-info-circle info-icon" data-info="whiskas-adulto"></i>
+                        </div>
+                        <div class="ingredients-info" id="whiskas-adulto">
+                            <p><strong>Ingredientes:</strong> Subproductos de carne (hígado de pollo mínimo 4%), cereales (arroz mínimo 4%), gluten de maíz, proteína vegetal, minerales, aceites y grasas (aceite de pescado mínimo 0.1%), vitaminas, taurina, antioxidantes (BHA, BHT).</p>
+                        </div>
+                        <span class="price">320 bs</span>
+                        <button class="btn-add-cart" data-id="13" data-name="WHISKAS Adulto" data-price="320">Añadir al carrito</button>
+                    </div>
+                </div>
+                
+                <div class="item" data-name="whiskas cachorro">
+                    <figure>
+                        <img src="https://www.whiskas.es/wp-content/uploads/2020/07/whiskas-producto-1-7kg.png" alt="Whiskas para gato cachorro">
+                    </figure>
+                    <div class="info">
+                        <div class="info-header">
+                            <h2>WHISKAS Cachorro</h2>
+                            <i class="fas fa-info-circle info-icon" data-info="whiskas-cachorro"></i>
+                        </div>
+                        <div class="ingredients-info" id="whiskas-cachorro">
+                            <p><strong>Ingredientes:</strong> Subproductos de carne (hígado de pollo mínimo 4%), cereales (arroz mínimo 4%), gluten de maíz, proteína vegetal, minerales, aceites y grasas (aceite de pescado mínimo 0.1%), vitaminas, taurina, antioxidantes (BHA, BHT).</p>
+                        </div>
+                        <span class="price">340 bs</span>
+                        <button class="btn-add-cart" data-id="14" data-name="WHISKAS Cachorro" data-price="340">Añadir al carrito</button>
+                    </div>
+                </div>
+                
+                <div class="item" data-name="cat chow adulto">
+                    <figure>
+                        <img src="https://www.purina-latam.com/sites/g/files/auxxlc391/files/styles/social_share_large/public/2020-11/purina-cat-chow-adulto.png" alt="Cat Chow adulto">
+                    </figure>
+                    <div class="info">
+                        <div class="info-header">
+                            <h2>CAT CHOW Adulto</h2>
+                            <i class="fas fa-info-circle info-icon" data-info="cat-chow-adulto"></i>
+                        </div>
+                        <div class="ingredients-info" id="cat-chow-adulto">
+                            <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                        </div>
+                        <span class="price">380 bs</span>
+                        <button class="btn-add-cart" data-id="15" data-name="CAT CHOW Adulto" data-price="380">Añadir al carrito</button>
+                    </div>
+                </div>
+                
+                <div class="item" data-name="cat chow cachorro">
+                    <figure>
+                        <img src="https://www.purina-latam.com/sites/g/files/auxxlc391/files/styles/social_share_large/public/2020-11/purina-cat-chow-gatitos.png" alt="Cat Chow cachorro">
+                    </figure>
+                    <div class="info">
+                        <div class="info-header">
+                            <h2>CAT CHOW Cachorro</h2>
+                            <i class="fas fa-info-circle info-icon" data-info="cat-chow-cachorro"></i>
+                        </div>
+                        <div class="ingredients-info" id="cat-chow-cachorro">
+                            <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                        </div>
+                        <span class="price">400 bs</span>
+                        <button class="btn-add-cart" data-id="16" data-name="CAT CHOW Cachorro" data-price="400">Añadir al carrito</button>
+                    </div>
+                </div>
+                
+                <div class="item" data-name="Podium (gato castrados)">
+                    <figure>
+                        <img src="imagenes gato/podium gato castrados.jpeg" alt="Podium (gato castrados)">
+                    </figure>
+                    <div class="info">
+                        <div class="info-header">
+                            <h2>Podium (gato castrados)</h2>
+                            <i class="fas fa-info-circle info-icon" data-info="Podium (gato castrados)"></i>
+                        </div>
+                        <div class="ingredients-info" id="Podium (gato castrados)">
+                            <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                        </div>
+                        <span class="price">400 bs</span>
+                        <button class="btn-add-cart" data-id="16" data-name="Podium (gato castrados)" data-price="400">Añadir al carrito</button>
+                    </div>
+                </div>
+    
+                <div class="item" data-name="Podium (gato adulto)">
+                    <figure>
+                        <img src="imagenes gato/podium gato adulto.jpeg" alt="Podium (gato adulto)">
+                    </figure>
+                    <div class="info">
+                        <div class="info-header">
+                            <h2>Podium (gato adulto)</h2>
+                            <i class="fas fa-info-circle info-icon" data-info="Podium (gato adulto)"></i>
+                        </div>
+                        <div class="ingredients-info" id="Podium (gato adulto)">
+                            <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                        </div>
+                        <span class="price">400 bs</span>
+                        <button class="btn-add-cart" data-id="16" data-name="Podium (gato adulto)" data-price="400">Añadir al carrito</button>
+                    </div>
+                </div>
+    
+                <div class="item" data-name="Podium (gatito)">
+                    <figure>
+                        <img src="imagenes gato/podium gatitos.jpeg" alt="Podium (gatito)">
+                    </figure>
+                    <div class="info">
+                        <div class="info-header">
+                            <h2>Podium (gatito)</h2>
+                            <i class="fas fa-info-circle info-icon" data-info="Podium (gatito)"></i>
+                        </div>
+                        <div class="ingredients-info" id="Podium (gatito)">
+                            <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                        </div>
+                        <span class="price">400 bs</span>
+                        <button class="btn-add-cart" data-id="16" data-name="Podium (gatito)" data-price="400">Añadir al carrito</button>
+                    </div>
+                </div>
+    
+                <div class="item" data-name="Matisse (gato castrado sabor salmon)">
+                    <figure>
+                        <img src="imagenes gato/matisse gato castrado sabor salmon.jpeg" alt="Matisse (gato castrado sabor salmon)">
+                    </figure>
+                    <div class="info">
+                        <div class="info-header">
+                            <h2>Matisse (gato castrado sabor salmon)</h2>
+                            <i class="fas fa-info-circle info-icon" data-info="Matisse (gato castrado sabor salmon)"></i>
+                        </div>
+                        <div class="ingredients-info" id="Matisse (gato castrado sabor salmon)">
+                            <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                        </div>
+                        <span class="price">400 bs</span>
+                        <button class="btn-add-cart" data-id="16" data-name="Matisse (gato castrado sabor salmon)" data-price="400">Añadir al carrito</button>
+                    </div>
+                </div>
+    
+                <div class="item" data-name="Matisse (gato castrado sabor pollo)">
+                    <figure>
+                        <img src="imagenes gato/matisse gato castrado sabor pollo.jpeg" alt="Matisse (gato castrado sabor pollo)">
+                    </figure>
+                    <div class="info">
+                        <div class="info-header">
+                            <h2>Matisse (gato castrado sabor pollo)</h2>
+                            <i class="fas fa-info-circle info-icon" data-info="Matisse (gato castrado sabor pollo)"></i>
+                        </div>
+                        <div class="ingredients-info" id="Matisse (gato castrado sabor pollo)">
+                            <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                        </div>
+                        <span class="price">400 bs</span>
+                        <button class="btn-add-cart" data-id="16" data-name="Matisse (gato castrado sabor pollo)" data-price="400">Añadir al carrito</button>
+                    </div>
+                </div>
+    
+                <div class="item" data-name="Matisse (gato castrado sabor cordero)">
+                    <figure>
+                        <img src="imagenes gato/matisse gato castrado sabor cordero.jpeg" alt="Matisse (gato castrado sabor cordero)">
+                    </figure>
+                    <div class="info">
+                        <div class="info-header">
+                            <h2>Matisse (gato castrado sabor cordero)</h2>
+                            <i class="fas fa-info-circle info-icon" data-info="Matisse (gato castrado sabor cordero)"></i>
+                        </div>
+                        <div class="ingredients-info" id="cat-chow-cachorro">
+                            <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                        </div>
+                        <span class="price">400 bs</span>
+                        <button class="btn-add-cart" data-id="16" data-name="Matisse (gato castrado sabor cordero)" data-price="400">Añadir al carrito</button>
+                    </div>
+                </div>
+    
+                <div class="no-results">
+                    <p>No se encontraron productos que coincidan con tu búsqueda</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contenido de Accesorios para Perros -->
+        <div class="tab-content" id="dog-accessories">
+            <div class="container-items">
+                <div class="item" data-name="collar para perro">
+                    <figure>
+                        <img src="https://m.media-amazon.com/images/I/71+UQx5z9VL._AC_UF1000,1000_QL80_.jpg" alt="Collar para perro">
+                    </figure>
+                    <div class="info">
+                        <h2>Collar Ajustable para Perro</h2>
+                        <span class="price">120 bs</span>
+                        <button class="btn-add-cart" data-id="5" data-name="Collar Ajustable para Perro" data-price="120">Añadir al carrito</button>
+                    </div>
+                </div>
+                
+                <div class="item" data-name="correa para perro">
+                    <figure>
+                        <img src="https://m.media-amazon.com/images/I/61+3+QJ0hBL._AC_UF1000,1000_QL80_.jpg" alt="Correa para perro">
+                    </figure>
+                    <div class="info">
+                        <h2>Correa Retráctil para Perro</h2>
+                        <span class="price">180 bs</span>
+                        <button class="btn-add-cart" data-id="6" data-name="Correa Retráctil para Perro" data-price="180">Añadir al carrito</button>
+                    </div>
+                </div>
+                
+                <div class="item" data-name="juguete para perro">
+                    <figure>
+                        <img src="https://m.media-amazon.com/images/I/71VX2IeQNVL._AC_UF1000,1000_QL80_.jpg" alt="Juguete para perro">
+                    </figure>
+                    <div class="info">
+                        <h2>Juguete Mordedor para Perro</h2>
+                        <span class="price">90 bs</span>
+                        <button class="btn-add-cart" data-id="7" data-name="Juguete Mordedor para Perro" data-price="90">Añadir al carrito</button>
+                    </div>
+                </div>
+                
+                <div class="item" data-name="cama para perro">
+                    <figure>
+                        <img src="https://m.media-amazon.com/images/I/81X6a+5v3BL._AC_UF1000,1000_QL80_.jpg" alt="Cama para perro">
+                    </figure>
+                    <div class="info">
+                        <h2>Cama Suave para Perro</h2>
+                        <span class="price">250 bs</span>
+                        <button class="btn-add-cart" data-id="8" data-name="Cama Suave para Perro" data-price="250">Añadir al carrito</button>
+                    </div>
+                </div>
+                
+                <div class="no-results">
+                    <p>No se encontraron productos que coincidan con tu búsqueda</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contenido de Accesorios para Gatos -->
+        <div class="tab-content" id="cat-accessories">
+            <div class="container-items">
+                <div class="item" data-name="rascador para gato">
+                    <figure>
+                        <img src="https://m.media-amazon.com/images/I/71y+4XZJNEL._AC_UF1000,1000_QL80_.jpg" alt="Rascador para gato">
+                    </figure>
+                    <div class="info">
+                        <h2>Rascador para Gato</h2>
+                        <span class="price">200 bs</span>
+                        <button class="btn-add-cart" data-id="9" data-name="Rascador para Gato" data-price="200">Añadir al carrito</button>
+                    </div>
+                </div>
+                
+                <div class="item" data-name="juguete para gato">
+                    <figure>
+                        <img src="https://m.media-amazon.com/images/I/71lH5J2QIAL._AC_UF1000,1000_QL80_.jpg" alt="Juguete para gato">
+                    </figure>
+                    <div class="info">
+                        <h2>Juguete con Plumas para Gato</h2>
+                        <span class="price">75 bs</span>
+                        <button class="btn-add-cart" data-id="10" data-name="Juguete con Plumas para Gato" data-price="75">Añadir al carrito</button>
+                    </div>
+                </div>
+                
+                <div class="item" data-name="cama para gato">
+                    <figure>
+                        <img src="https://m.media-amazon.com/images/I/81X6a+5v3BL._AC_UF1000,1000_QL80_.jpg" alt="Cama para gato">
+                    </figure>
+                    <div class="info">
+                        <h2>Cama Cálida para Gato</h2>
+                        <span class="price">180 bs</span>
+                        <button class="btn-add-cart" data-id="11" data-name="Cama Cálida para Gato" data-price="180">Añadir al carrito</button>
+                    </div>
+                </div>
+                
+                <div class="item" data-name="comedero para gato">
+                    <figure>
+                        <img src="https://m.media-amazon.com/images/I/71VX2IeQNVL._AC_UF1000,1000_QL80_.jpg" alt="Comedero para gato">
+                    </figure>
+                    <div class="info">
+                        <h2>Comedero Automático para Gato</h2>
+                        <span class="price">300 bs</span>
+                        <button class="btn-add-cart" data-id="12" data-name="Comedero Automático para Gato" data-price="300">Añadir al carrito</button>
+                    </div>
+                </div>
+                
+                <div class="no-results">
+                    <p>No se encontraron productos que coincidan con tu búsqueda</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Botón flotante de redes sociales -->
+        <div class="social-float">
+            <div class="social-networks" id="social-networks">
+                <a href="https://www.tiktok.com/@lexericka?lang=es" target="_blank" class="social-btn tiktok-btn">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=100064158181876" target="_blank" class="social-btn facebook-btn">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/lexericka/" target="_blank" class="social-btn instagram-btn">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+            <div class="social-main-btn" id="social-main-btn">
+                <i class="fas fa-share-alt"></i>
+            </div>
+        </div>
+    
+        <script>
+           document.addEventListener('DOMContentLoaded', function() {
+    // Variables generales
+    const cartIcon = document.getElementById('cart-icon');
+    const cartContainer = document.getElementById('cart-container');
+    const cartProducts = document.getElementById('cart-products');
+    const countProducts = document.getElementById('contador-productos');
+    const totalPagar = document.getElementById('total-pagar');
+    const btnPedir = document.getElementById('btn-pedir');
+    const btnAddToCart = document.querySelectorAll('.btn-add-cart');
+    const socialMainBtn = document.getElementById('social-main-btn');
+    const socialNetworks = document.getElementById('social-networks');
+    const infoIcons = document.querySelectorAll('.info-icon');
+    const searchInput = document.getElementById('search-input');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    let cart = [];
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Variables
-            const cartIcon = document.getElementById('cart-icon');
-            const cartContainer = document.getElementById('cart-container');
-            const cartProducts = document.getElementById('cart-products');
-            const countProducts = document.getElementById('contador-productos');
-            const totalPagar = document.getElementById('total-pagar');
-            const btnPedir = document.getElementById('btn-pedir');
-            const btnAddToCart = document.querySelectorAll('.btn-add-cart');
-            const searchInput = document.getElementById('search-input');
-            const productsContainer = document.getElementById('products-container');
-            const allItems = document.querySelectorAll('.item');
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            const tabContents = document.querySelectorAll('.tab-content');
-            const socialMainBtn = document.getElementById('social-main-btn');
-            const socialNetworks = document.getElementById('social-networks');
+    // Mostrar/ocultar carrito
+    cartIcon.addEventListener('click', function(e) {
+        e.stopPropagation();
+        cartContainer.classList.toggle('hidden-cart');
+        cartContainer.classList.toggle('visible-cart');
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!cartContainer.contains(e.target) && e.target !== cartIcon) {
+            cartContainer.classList.add('hidden-cart');
+            cartContainer.classList.remove('visible-cart');
+        }
+    });
+
+    // Mostrar/ocultar redes sociales
+    socialMainBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        socialNetworks.classList.toggle('active');
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!socialNetworks.contains(e.target) && e.target !== socialMainBtn) {
+            socialNetworks.classList.remove('active');
+        }
+    });
+
+    // Manejar iconos de información
+    infoIcons.forEach(icon => {
+        icon.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            document.getElementById(this.getAttribute('data-info')).classList.add('active');
+        });
+        icon.addEventListener('mouseup', function() {
+            document.getElementById(this.getAttribute('data-info')).classList.remove('active');
+        });
+        icon.addEventListener('mouseleave', function() {
+            document.getElementById(this.getAttribute('data-info')).classList.remove('active');
+        });
+    });
+
+    // Filtrar productos
+    function filterProducts(searchTerm) {
+        const activeTab = document.querySelector('.tab-content.active');
+        const items = activeTab.querySelectorAll('.item');
+        let hasResults = false;
+        
+        items.forEach(item => {
+            const productName = item.getAttribute('data-name').toLowerCase();
+            if (productName.includes(searchTerm.toLowerCase())) {
+                item.classList.remove('hidden');
+                hasResults = true;
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+        
+        const noResults = activeTab.querySelector('.no-results');
+        if (noResults) {
+            noResults.style.display = hasResults ? 'none' : 'block';
+        }
+    }
+
+    searchInput.addEventListener('input', function() {
+        filterProducts(this.value);
+    });
+
+    // Cambiar pestañas
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tabId = this.getAttribute('data-tab');
             
-            let cart = [];
+            tabBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
             
-            // Mostrar/ocultar carrito
-            cartIcon.addEventListener('click', function(e) {
-                e.stopPropagation();
-                if (cartContainer.classList.contains('hidden-cart')) {
-                    cartContainer.classList.remove('hidden-cart');
-                    cartContainer.classList.add('visible-cart');
-                } else {
-                    cartContainer.classList.add('hidden-cart');
-                    cartContainer.classList.remove('visible-cart');
-                }
-            });
+            tabContents.forEach(content => content.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
             
-            // Cerrar carrito al hacer clic fuera
-            document.addEventListener('click', function(e) {
-                if (!cartContainer.contains(e.target) && e.target !== cartIcon && !cartIcon.contains(e.target)) {
-                    cartContainer.classList.add('hidden-cart');
-                    cartContainer.classList.remove('visible-cart');
-                }
-            });
-            
-            // Mostrar/ocultar redes sociales
-            socialMainBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                socialNetworks.classList.toggle('active');
-            });
-            
-            // Cerrar redes sociales al hacer clic fuera
-            document.addEventListener('click', function(e) {
-                if (!socialNetworks.contains(e.target) && e.target !== socialMainBtn && !socialMainBtn.contains(e.target)) {
-                    socialNetworks.classList.remove('active');
-                }
-            });
-            
-            // Añadir productos al carrito
-            btnAddToCart.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const id = this.getAttribute('data-id');
-                    const name = this.getAttribute('data-name');
-                    const price = parseFloat(this.getAttribute('data-price'));
-                    
-                    // Verificar si el producto ya está en el carrito
-                    const existingProduct = cart.find(item => item.id === id);
-                    
-                    if (existingProduct) {
-                        existingProduct.quantity += 1;
-                    } else {
-                        cart.push({
-                            id,
-                            name,
-                            price,
-                            quantity: 1
-                        });
-                    }
-                    
-                    updateCart();
-                    showNotification('Producto añadido al carrito');
-                });
-            });
-            
-            // Actualizar carrito
-            function updateCart() {
-                // Actualizar contador
-                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-                countProducts.textContent = totalItems;
-                
-                // Actualizar lista de productos
-                if (cart.length === 0) {
-                    cartProducts.innerHTML = '<div class="empty-cart"><p>Tu carrito está vacío</p></div>';
-                    btnPedir.style.display = 'none';
-                } else {
-                    cartProducts.innerHTML = '';
-                    cart.forEach(item => {
-                        const productElement = document.createElement('div');
-                        productElement.className = 'cart-product';
-                        productElement.innerHTML = `
-                            <div class="info-cart-product">
-                                <span class="cantidad-producto-carrito">${item.quantity}</span>
-                                <p class="titulo-producto-carrito">${item.name}</p>
-                                <span class="precio-producto-carrito">${(item.price * item.quantity).toFixed(2)} bs</span>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="icon-close" data-id="${item.id}">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                            </svg>
-                        `;
-                        cartProducts.appendChild(productElement);
-                    });
-                    
-                    btnPedir.style.display = 'block';
-                }
-                
-                // Actualizar total
-                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                totalPagar.textContent = `${total.toFixed(2)} bs`;
-                
-                // Añadir eventos a los botones de eliminar
-                document.querySelectorAll('.icon-close').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const id = this.getAttribute('data-id');
-                        removeFromCart(id);
-                    });
+            if (searchInput.value) {
+                filterProducts(searchInput.value);
+            }
+        });
+    });
+
+    // Añadir productos al carrito
+    btnAddToCart.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const baseId = this.getAttribute('data-id');
+            const uniqueId = baseId + '-' + Math.random().toString(36).substr(2, 9); // ID único
+            const name = this.getAttribute('data-name');
+            const price = parseFloat(this.getAttribute('data-price'));
+
+            // Buscar producto existente con mismo nombre y precio
+            const existingProductIndex = cart.findIndex(item => 
+                item.name === name && item.price === price
+            );
+
+            if (existingProductIndex !== -1) {
+                cart[existingProductIndex].quantity += 1;
+            } else {
+                cart.push({ 
+                    id: uniqueId, 
+                    name: name, 
+                    price: price, 
+                    quantity: 1 
                 });
             }
+
+            updateCart();
+            showNotification('Producto añadido al carrito');
+        });
+    });
+
+    // Actualizar carrito
+    function updateCart() {
+        cartProducts.innerHTML = '';
+        if (cart.length === 0) {
+            cartProducts.innerHTML = '<div class="empty-cart"><p>Tu carrito está vacío</p></div>';
+            countProducts.textContent = '0';
+            totalPagar.textContent = '0 bs';
+            return;
+        }
+        
+        let total = 0;
+        cart.forEach(item => {
+            total += item.price * item.quantity;
             
-            // Eliminar producto del carrito
-            function removeFromCart(id) {
-                cart = cart.filter(item => item.id !== id);
+            const cartProduct = document.createElement('div');
+            cartProduct.className = 'cart-product';
+            cartProduct.innerHTML = `
+                <div class="info-cart-product">
+                    <span class="cantidad-producto-carrito">${item.quantity}x</span>
+                    <p class="titulo-producto-carrito">${item.name}</p>
+                    <span class="precio-producto-carrito">${(item.price * item.quantity).toFixed(2)} bs</span>
+                </div>
+                <button class="remove-item" data-id="${item.id}">X</button>
+            `;
+            cartProducts.appendChild(cartProduct);
+        });
+        
+        countProducts.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+        totalPagar.textContent = `${total.toFixed(2)} bs`;
+        
+        document.querySelectorAll('.remove-item').forEach(btn => {
+            btn.addEventListener('click', function() {
+                cart = cart.filter(item => item.id !== this.getAttribute('data-id'));
                 updateCart();
                 showNotification('Producto eliminado del carrito');
-            }
-            
-            // Función de búsqueda
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                const activeTab = document.querySelector('.tab-content.active');
-                const itemsInActiveTab = activeTab.querySelectorAll('.item');
-                let hasResults = false;
-                
-                itemsInActiveTab.forEach(item => {
-                    const productName = item.getAttribute('data-name').toLowerCase();
-                    if (productName.includes(searchTerm)) {
-                        item.classList.remove('hidden');
-                        hasResults = true;
-                    } else {
-                        item.classList.add('hidden');
-                    }
-                });
-                
-                // Mostrar mensaje si no hay resultados
-                const noResultsElement = activeTab.querySelector('.no-results');
-                if (!hasResults) {
-                    if (!noResultsElement) {
-                        const noResults = document.createElement('div');
-                        noResults.className = 'no-results';
-                        noResults.textContent = 'No se encontraron productos que coincidan con tu búsqueda';
-                        activeTab.appendChild(noResults);
-                    }
-                } else if (noResultsElement) {
-                    noResultsElement.remove();
-                }
-            });
-            
-            // Cambio de pestañas
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const tabId = this.getAttribute('data-tab');
-                    
-                    // Remover clase active de todos los botones y contenidos
-                    tabBtns.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Añadir clase active al botón y contenido seleccionado
-                    this.classList.add('active');
-                    document.getElementById(tabId).classList.add('active');
-                    
-                    // Limpiar búsqueda al cambiar de pestaña
-                    searchInput.value = '';
-                    const itemsInActiveTab = document.getElementById(tabId).querySelectorAll('.item');
-                    itemsInActiveTab.forEach(item => item.classList.remove('hidden'));
-                    
-                    // Eliminar mensaje de no resultados si existe
-                    const noResultsElement = document.getElementById(tabId).querySelector('.no-results');
-                    if (noResultsElement) {
-                        noResultsElement.remove();
-                    }
-                });
-            });
-            
-            // Mostrar notificación
-            function showNotification(message) {
-                const notification = document.createElement('div');
-                notification.className = 'notification';
-                notification.textContent = message;
-                
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.remove();
-                }, 2500);
-            }
-            
-            // Enviar pedido por WhatsApp
-            btnPedir.addEventListener('click', function() {
-                if (cart.length === 0) return;
-                
-                let message = '¡Hola! Quiero realizar el siguiente pedido:\n\n';
-                
-                cart.forEach(item => {
-                    message += `- ${item.name} (${item.quantity} x ${item.price} bs) = ${(item.quantity * item.price).toFixed(2)} bs\n`;
-                });
-                
-                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                message += `\n*Total a pagar: ${total.toFixed(2)} bs*`;
-                message += '\n\nPor favor, confirmen mi pedido. ¡Gracias!';
-                
-                const phoneNumber = '+59177802579';
-                const encodedMessage = encodeURIComponent(message);
-                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-                
-                window.open(whatsappUrl, '_blank');
             });
         });
-    </script>
-</body>
-</html>
+    }
+
+    // Generar mensaje de WhatsApp
+    function generarMensajeWhatsApp(cart) {
+        let mensaje = "¡Hola! Quiero realizar el siguiente pedido:%0A%0A";
+        cart.forEach(item => {
+            mensaje += `- ${item.name} (${item.quantity} x ${item.price} bs) = ${(item.quantity * item.price).toFixed(2)} bs%0A`;
+        });
+        mensaje += `%0ATotal a pagar: ${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)} bs`;
+        return mensaje;
+    }
+
+    // Realizar pedido (con historial)
+    btnPedir.addEventListener('click', function() {
+        if (cart.length === 0) {
+            showNotification('El carrito está vacío');
+            return;
+        }
+        
+        // Calcular total
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        
+        // Crear objeto de compra para el historial
+        const purchase = {
+            date: new Date().toLocaleString('es-BO', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            }),
+            total: total,
+            products: cart.map(item => ({
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity
+            }))
+        };
+        
+        // Guardar en el historial
+        saveToPurchaseHistory(purchase);
+        
+        // Generar y abrir WhatsApp
+        const whatsappUrl = `https://wa.me/59177802579?text=${generarMensajeWhatsApp(cart)}`;
+        cart = [];
+        updateCart();
+        window.open(whatsappUrl, '_blank');
+    });
+
+    // Función para guardar en el historial
+    function saveToPurchaseHistory(purchase) {
+        let history = JSON.parse(localStorage.getItem('purchaseHistory')) || [];
+        history.unshift(purchase); // Agregar al inicio del array
+        localStorage.setItem('purchaseHistory', JSON.stringify(history));
+    }
+
+    // Mostrar notificación
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 2300);
+    }
+});
+        </script>
+    </body>
+    </html>
