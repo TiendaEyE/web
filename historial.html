@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Compras - TiendaEyE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #50d43f;
+            --secondary-color: #f8c537;
+            --dark-color: #333;
+            --light-color: #f4f4f4;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .history-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .history-title {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .purchase-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .purchase-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .purchase-number {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .purchase-date {
+            color: #666;
+        }
+
+        .purchase-total {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            flex: 2;
+        }
+
+        .product-quantity {
+            flex: 1;
+            text-align: center;
+        }
+
+        .product-price {
+            flex: 1;
+            text-align: right;
+        }
+
+        .back-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #3fa830;
+        }
+
+        .no-history {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .purchase-header {
+                flex-direction: column;
+            }
+            
+            .purchase-number {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="history-container">
+        <h1 class="history-title"><i class="fas fa-history"></i> Historial de Compras</h1>
+        
+        <div id="purchases-container">
+            <!-- Las compras se cargarán aquí dinámicamente -->
+        </div>
+        
+        <a href="nuevo.html" class="back-button">
+            <i class="fas fa-arrow-left"></i> Volver a la Tienda
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const purchasesContainer = document.getElementById('purchases-container');
+            const history = JSON.parse(localStorage.getItem('purchaseHistory')) || [];
+            
+            if (history.length === 0) {
+                purchasesContainer.innerHTML = '<p class="no-history">No hay compras registradas en tu historial.</p>';
+                return;
+            }
+            
+            // Ordenar las compras del más reciente al más antiguo
+            history.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            // Mostrar las compras ordenadas
+            history.forEach((purchase, index) => {
+                const purchaseCard = document.createElement('div');
+                purchaseCard.className = 'purchase-card';
+                
+                let productsHTML = '';
+                purchase.products.forEach(product => {
+                    productsHTML += `
+                        <div class="product-item">
+                            <span class="product-name">${product.name}</span>
+                            <span class="product-quantity">${product.quantity} x ${product.price.toFixed(2)} bs</span>
+                            <span class="product-price">${(product.quantity * product.price).toFixed(2)} bs</span>
+                        </div>
+                    `;
+                });
+                
+                purchaseCard.innerHTML = `
+                    <div class="purchase-header">
+                        <span class="purchase-number">Compra #${history.length - index}</span>
+                        <span class="purchase-date">${purchase.date}</span>
+                    </div>
+                    ${productsHTML}
+                    <div class="purchase-total">Total: ${purchase.total.toFixed(2)} bs</div>
+                `;
+                
+                purchasesContainer.appendChild(purchaseCard);
+            });
+        });
+    </script>
+</body>
+</html>

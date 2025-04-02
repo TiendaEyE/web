@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sucursales - TiendaEyE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos específicos para la página de sucursales */
+        .map-container {
+            padding: 2rem;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+        
+        .map-container h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .map-iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+            border-radius: 8px;
+        }
+        
+        .sucursal-info {
+            margin-bottom: 1.5rem;
+        }
+        
+        .sucursal-title {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .sucursal-direccion {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sucursal-horario {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .volver-tienda {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .volver-tienda:hover {
+            background-color: #43b336;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1><i class="fas fa-paw"></i> Tienda EyE</h1>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Buscar productos...">
+            </div>
+            
+            <div class="dropdown">
+                <a href="#" class="nav-link" style="background-color: rgba(255, 255, 255, 0.2);">
+                    <i class="fas fa-map-marker-alt"></i> Sucursales
+                </a>
+                <div class="dropdown-content">
+                    <a href="sucursal.html?branch=1">
+                        <div class="sucursal-title">Mercadito 2 de Agosto</div>
+                        <div class="sucursal-direccion">Av. 2 de Agosto, Santa Cruz</div>
+                    </a>
+                    <a href="sucursal.html?branch=2">
+                        <div class="sucursal-title"> Av.Lujan </div>
+                        <div class="sucursal-direccion">Av. Lujan, Santa Cruz</div>
+                    </a>
+                </div>
+            </div>
+            
+            <a href="historial.html" class="nav-link">Historial</a>
+            
+            <div class="container-icon" id="cart-icon">
+                <!-- Icono del carrito -->
+            </div>
+        </div>
+    </header>
+
+    <div class="map-container">
+        <div id="sucursal-content">
+            <!-- El contenido de la sucursal se cargará aquí dinámicamente -->
+        </div>
+        <a href="NUEVO.html" class="volver-tienda">
+            <i class="fas fa-arrow-left"></i> Volver a la Tienda
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const branch = urlParams.get('branch');
+            const sucursalContent = document.getElementById('sucursal-content');
+            
+            if(branch === '1') {
+                sucursalContent.innerHTML = `
+                    <div class="sucursal-info">
+                        <h2 class="sucursal-title">Mercadito 2 de Agosto</h2>
+                        <p class="sucursal-direccion">Av. 2 de Agosto, Santa Cruz, Bolivia</p>
+                        <p class="sucursal-horario">Horario: Lunes a Sábado de 8:00 AM a 8:00 PM</p>
+                    </div>
+                    <iframe class="map-iframe" 
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9431.291817398498!2d-63.1430012!3d-17.7339537!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93f1e65a8e4de737%3A0x62c0825540fcb9b2!2sMercadito%202%20de%20Agosto!5e1!3m2!1ses-419!2sbo!4v1743428826442!5m2!1ses-419!2sbo" 
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                `;
+            } else if(branch === '2') {
+                sucursalContent.innerHTML = `
+                    <div class="sucursal-info">
+                        <h2 class="sucursal-title">Av. Lujan </h2>
+                        <p class="sucursal-direccion">Av. Lujan, Santa Cruz, Bolivia</p>
+                        <p class="sucursal-horario">Horario: Lunes a Domingo de 7:00 AM a 9:00 PM</p>
+                    </div>
+                    <iframe class="map-iframe" 
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d589.4170495341468!2d-63.120329651968326!3d-17.74570944641336!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93f1e79b792fe3a5%3A0x61662b5d01ab9566!2sPasteleria%20Chantyll%C3%AD!5e1!3m2!1ses-419!2sbo!4v1743429203283!5m2!1ses-419!2sbo" 
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                `;
+            } else {
+                // Si no se especifica sucursal, redirigir a la tienda
+                window.location.href = 'NUEVO.html';
+            }
+        });
+    </script>
+</body>
+</html>

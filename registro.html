@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - TiendaEyE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex; /* Añadimos para centrar el auth-container */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+            min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+        }
+
+        .auth-header {
+            text-align: center;
+            display: flex; /* Añadimos para centrar el logo y el título */
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .auth-logo {
+            width: 250px;
+            height: 250px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .auth-title {
+            color: #333;
+        }
+
+        .auth-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .btn-auth {
+            background-color: #f3e308;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-auth:hover {
+            background-color: #f3b711;
+        }
+
+        .auth-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .auth-links a {
+            color: #fcd526;
+            text-decoration: none;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-header">
+        <img src="https://scontent.fvvi1-2.fna.fbcdn.net/v/t39.30808-6/353008046_661878539294080_2691523156726765628_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=05WEHg0MvscQ7kNvgFOUbgl&_nc_oc=AdmTxT4lUHHrnVm3apKo8WM02CbTrWnL-JlKjiyEBaT1f8whCqkX5XYtdrr7HMMmad8&_nc_zt=23&_nc_ht=scontent.fvvi1-2.fna&_nc_gid=5VxgUl2991U498JmjhPaVQ&oh=00_AYEzdSLuD4dQFH-tbCxcRBVYueinN1l989JySKidYoyx1w&oe=67EC04F7" 
+             alt="Logo Tienda EyE" 
+             class="auth-logo">
+        <h1 class="auth-title">
+            <i class="fas fa-paw"></i>
+            Tienda EyE
+        </h1>
+    </div>
+
+    <div class="auth-container">
+        <div class="error-message" id="error-message"></div>
+        <form class="auth-form" id="registerForm">
+            <div class="form-group">
+                <label>Nombre completo</label>
+                <input type="text" class="form-input" id="nombre" placeholder="Juan Pérez" required>
+            </div>
+            <div class="form-group">
+                <label>Teléfono</label>
+                <input type="tel" class="form-input" id="telefono" placeholder="77777777" required>
+            </div>
+            <div class="form-group">
+                <label>Correo electrónico</label>
+                <input type="email" class="form-input" id="email" placeholder="ejemplo@correo.com" required>
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" class="form-input" id="password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn-auth">Registrarse</button>
+        </form>
+        <div class="auth-links">
+            <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+    <script src="auth.js"></script>
+</body>
+</html>
