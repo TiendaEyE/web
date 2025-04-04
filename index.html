@@ -563,86 +563,179 @@
             z-index: 1000;
             animation: fadeIn 0.3s, fadeOut 0.3s 2s forwards;
         }
-        
-        /* Responsive Design */
+    
+        /* ========================================== */
+        /* MEJORAS DE RESPONSIVIDAD (NUEVOS ESTILOS) */
+        /* ========================================== */
+    
+        /* Header mejorado para móviles */
         @media (max-width: 768px) {
             header {
-                padding: 1rem;
+                padding: 0.5rem;
             }
             
             .header-content {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 1rem;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 0.5rem;
             }
             
             h1 {
+                font-size: 1.4rem;
                 margin-right: 0;
+                width: 100%;
                 text-align: center;
+                order: 1;
             }
             
             .search-container {
-                margin: 0;
                 order: 3;
                 width: 100%;
+                margin: 0;
+                padding: 0 0.5rem;
             }
             
+            .dropdown, .nav-link {
+                order: 2;
+                margin-left: 0;
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .container-icon {
+                order: 4;
+                margin-left: auto;
+            }
+        }
+    
+        /* Pestañas mejor adaptadas */
+        @media (max-width: 768px) {
             .tabs {
-                flex-direction: column;
-                align-items: center;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 0.5rem;
             }
             
             .tab-btn {
-                margin: 0.3rem 0;
-                width: 80%;
-                justify-content: center;
-            }
-            
-            .container-items {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                padding: 1rem;
-                gap: 1rem;
-            }
-            
-            .container-cart-products {
-                width: 300px;
-                right: -50px;
-            }
-            
-            .social-float {
-                bottom: 20px;
-                right: 20px;
-            }
-            
-            body::before {
-                background-size: 50%;
+                padding: 0.6rem 1rem;
+                margin: 0.2rem;
+                font-size: 0.8rem;
+                min-width: 120px;
             }
         }
-        
+    
+        /* Grid de productos optimizado */
         @media (max-width: 480px) {
+            .container-items {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .item {
+                margin-bottom: 0;
+            }
+            
+            .item figure {
+                height: 150px;
+            }
+            
+            .info {
+                padding: 1rem;
+            }
+            
+            .price {
+                font-size: 1.1rem;
+            }
+            
+            .item button {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+        }
+    
+        /* Carrito mejor posicionado */
+        @media (max-width: 768px) {
+            .container-cart-products {
+                width: 280px;
+                right: 10px;
+                top: 60px;
+            }
+        }
+    
+        /* Imagen de fondo adaptativa */
+        @media (max-width: 768px) {
+            body::before {
+                background-size: 70%;
+                opacity: 0.05;
+            }
+        }
+    
+        /* Mejoras para tablets */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .container-items {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .tab-btn {
+                min-width: 150px;
+            }
+        }
+    
+        /* Texto más legible en móviles */
+        @media (max-width: 480px) {
+            .info h2 {
+                font-size: 1rem;
+            }
+            
+            .ingredients-info p {
+                font-size: 0.8rem;
+            }
+            
+            .cart-product {
+                padding: 0.8rem 0;
+            }
+            
+            .titulo-producto-carrito {
+                font-size: 0.9rem;
+            }
+        }
+    
+        /* Botones sociales más pequeños en móviles */
+        @media (max-width: 480px) {
+            .social-main-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+            
+            .social-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+            }
+            
+            .social-networks {
+                bottom: 60px;
+            }
+        }
+    
+        /* Ajustes adicionales para pantallas muy pequeñas */
+        @media (max-width: 360px) {
             .container-items {
                 grid-template-columns: 1fr;
             }
             
-            .container-cart-products {
-                width: 280px;
-                right: -30px;
+            .tab-btn {
+                min-width: 100px;
+                font-size: 0.7rem;
+                padding: 0.5rem 0.8rem;
             }
             
-            .social-main-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
-            }
-            
-            .social-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
-            
-            body::before {
-                background-size: 70%;
+            .search-input {
+                font-size: 0.9rem;
+                padding: 0.5rem 0.8rem;
             }
         }
     </style>
@@ -988,7 +1081,55 @@
                     <button class="btn-add-cart" data-id="4" data-name="Mican (cachorro)" data-price="360">Añadir al carrito</button>
                 </div>
             </div>
-
+            <div class="item" data-name="Royal Kanin (mini puppy)">
+                <figure>
+                    <img src="imagenes/royal kanin mini puppy.png" alt="Royal Kanin (mini puppy)">
+                </figure>
+                <div class="info">
+                    <div class="info-header">
+                        <h2>Royal Kanin (mini puppy)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Royal Kanin (mini puppy)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Royal Kanin (mini puppy)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Royal Kanin (mini puppy)" data-price="360">Añadir al carrito</button>
+                </div>
+            </div>
+            <div class="item" data-name="Sabueso (adulto)">
+                <figure>
+                    <img src="imagenes/sabueso adulto.jpeg" alt="Sabueso (adulto)">
+                </figure>
+                <div class="info">
+                    <div class="info-header">
+                        <h2>Sabueso (adulto)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Sabueso (adulto)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Sabueso (adulto)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Sabueso (adulto)" data-price="360">Añadir al carrito</button>
+                </div>
+            </div>
+            <div class="item" data-name="Sabueso (cachorro)">
+                <figure>
+                    <img src="imagenes/sabueso cachorro.jpeg" alt="Sabueso (cachorro)">
+                </figure>
+                <div class="info">
+                    <div class="info-header">
+                        <h2>Sabueso (cachorro)</h2>
+                        <i class="fas fa-info-circle info-icon" data-info="Sabueso (cachorro)"></i>
+                    </div>
+                    <div class="ingredients-info" id="Sabueso (cachorro)">
+                        <p><strong>Ingredientes:</strong> Maíz, harina de subproductos de pollo, gluten de maíz, harina de soya, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                    </div>
+                    <span class="price">360 bs</span>
+                    <button class="btn-add-cart" data-id="4" data-name="Sabueso (cachorro)" data-price="360">Añadir al carrito</button>
+                </div>
+            </div>
+            
             <div class="no-results">
                 <p>No se encontraron productos que coincidan con tu búsqueda</p>
             </div>
@@ -1066,113 +1207,163 @@
                     </div>
                 </div>
                 
-                <div class="item" data-name="Podium (gato castrados)">
+                <div class="item" data-name="podium gato castrados">
                     <figure>
-                        <img src="imagenes gato/podium gato castrados.jpeg" alt="Podium (gato castrados)">
+                        <img src="imagenes gato/podium castrado.jpeg" alt="Podium gato castrados">
                     </figure>
                     <div class="info">
                         <div class="info-header">
                             <h2>Podium (gato castrados)</h2>
-                            <i class="fas fa-info-circle info-icon" data-info="Podium (gato castrados)"></i>
+                            <i class="fas fa-info-circle info-icon" data-info="podium-gato-castrados"></i>
                         </div>
-                        <div class="ingredients-info" id="Podium (gato castrados)">
+                        <div class="ingredients-info" id="podium-gato-castrados">
                             <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
                         </div>
                         <span class="price">400 bs</span>
-                        <button class="btn-add-cart" data-id="16" data-name="Podium (gato castrados)" data-price="400">Añadir al carrito</button>
+                        <button class="btn-add-cart" data-id="17" data-name="Podium (gato castrados)" data-price="400">Añadir al carrito</button>
                     </div>
                 </div>
-    
-                <div class="item" data-name="Podium (gato adulto)">
+        
+                <div class="item" data-name="podium gato adulto">
                     <figure>
-                        <img src="imagenes gato/podium gato adulto.jpeg" alt="Podium (gato adulto)">
+                        <img src="imagenes gato/podium adulto.jpeg" alt="Podium gato adulto">
                     </figure>
                     <div class="info">
                         <div class="info-header">
                             <h2>Podium (gato adulto)</h2>
-                            <i class="fas fa-info-circle info-icon" data-info="Podium (gato adulto)"></i>
+                            <i class="fas fa-info-circle info-icon" data-info="podium-gato-adulto"></i>
                         </div>
-                        <div class="ingredients-info" id="Podium (gato adulto)">
+                        <div class="ingredients-info" id="podium-gato-adulto">
                             <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
                         </div>
                         <span class="price">400 bs</span>
-                        <button class="btn-add-cart" data-id="16" data-name="Podium (gato adulto)" data-price="400">Añadir al carrito</button>
+                        <button class="btn-add-cart" data-id="18" data-name="Podium (gato adulto)" data-price="400">Añadir al carrito</button>
                     </div>
                 </div>
-    
-                <div class="item" data-name="Podium (gatito)">
+        
+                <div class="item" data-name="podium gatito">
                     <figure>
-                        <img src="imagenes gato/podium gatitos.jpeg" alt="Podium (gatito)">
+                        <img src="imagenes gato/podium gatito.jpeg" alt="Podium gatito">
                     </figure>
                     <div class="info">
                         <div class="info-header">
                             <h2>Podium (gatito)</h2>
-                            <i class="fas fa-info-circle info-icon" data-info="Podium (gatito)"></i>
+                            <i class="fas fa-info-circle info-icon" data-info="podium-gatito"></i>
                         </div>
-                        <div class="ingredients-info" id="Podium (gatito)">
+                        <div class="ingredients-info" id="podium-gatito">
                             <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
                         </div>
                         <span class="price">400 bs</span>
-                        <button class="btn-add-cart" data-id="16" data-name="Podium (gatito)" data-price="400">Añadir al carrito</button>
+                        <button class="btn-add-cart" data-id="19" data-name="Podium (gatito)" data-price="400">Añadir al carrito</button>
                     </div>
                 </div>
-    
-                <div class="item" data-name="Matisse (gato castrado sabor salmon)">
+        
+                <div class="item" data-name="matisse gato castrado salmon">
                     <figure>
-                        <img src="imagenes gato/matisse gato castrado sabor salmon.jpeg" alt="Matisse (gato castrado sabor salmon)">
+                        <img src="imagenes gato/matisse castrado sabor salmon.jpeg" alt="Matisse gato castrado salmon">
                     </figure>
                     <div class="info">
                         <div class="info-header">
                             <h2>Matisse (gato castrado sabor salmon)</h2>
-                            <i class="fas fa-info-circle info-icon" data-info="Matisse (gato castrado sabor salmon)"></i>
+                            <i class="fas fa-info-circle info-icon" data-info="matisse-gato-castrado-salmon"></i>
                         </div>
-                        <div class="ingredients-info" id="Matisse (gato castrado sabor salmon)">
+                        <div class="ingredients-info" id="matisse-gato-castrado-salmon">
                             <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
                         </div>
                         <span class="price">400 bs</span>
-                        <button class="btn-add-cart" data-id="16" data-name="Matisse (gato castrado sabor salmon)" data-price="400">Añadir al carrito</button>
+                        <button class="btn-add-cart" data-id="20" data-name="Matisse (gato castrado sabor salmon)" data-price="400">Añadir al carrito</button>
                     </div>
                 </div>
-    
-                <div class="item" data-name="Matisse (gato castrado sabor pollo)">
+        
+                <div class="item" data-name="matisse gato castrado pollo">
                     <figure>
-                        <img src="imagenes gato/matisse gato castrado sabor pollo.jpeg" alt="Matisse (gato castrado sabor pollo)">
+                        <img src="imagenes gato/matisse castrado sabor pollo.jpeg" alt="Matisse gato castrado pollo">
                     </figure>
                     <div class="info">
                         <div class="info-header">
                             <h2>Matisse (gato castrado sabor pollo)</h2>
-                            <i class="fas fa-info-circle info-icon" data-info="Matisse (gato castrado sabor pollo)"></i>
+                            <i class="fas fa-info-circle info-icon" data-info="matisse-gato-castrado-pollo"></i>
                         </div>
-                        <div class="ingredients-info" id="Matisse (gato castrado sabor pollo)">
+                        <div class="ingredients-info" id="matisse-gato-castrado-pollo">
                             <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
                         </div>
                         <span class="price">400 bs</span>
-                        <button class="btn-add-cart" data-id="16" data-name="Matisse (gato castrado sabor pollo)" data-price="400">Añadir al carrito</button>
+                        <button class="btn-add-cart" data-id="21" data-name="Matisse (gato castrado sabor pollo)" data-price="400">Añadir al carrito</button>
                     </div>
                 </div>
-    
-                <div class="item" data-name="Matisse (gato castrado sabor cordero)">
+                
+                <div class="item" data-name="matisse gato castrado cordero">
                     <figure>
-                        <img src="imagenes gato/matisse gato castrado sabor cordero.jpeg" alt="Matisse (gato castrado sabor cordero)">
+                        <img src="imagenes gato/matisse sabor cordeiro.jpeg" alt="Matisse gato castrado cordero">
                     </figure>
                     <div class="info">
                         <div class="info-header">
                             <h2>Matisse (gato castrado sabor cordero)</h2>
-                            <i class="fas fa-info-circle info-icon" data-info="Matisse (gato castrado sabor cordero)"></i>
+                            <i class="fas fa-info-circle info-icon" data-info="matisse-gato-castrado-cordero"></i>
                         </div>
-                        <div class="ingredients-info" id="cat-chow-cachorro">
+                        <div class="ingredients-info" id="matisse-gato-castrado-cordero">
                             <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
                         </div>
                         <span class="price">400 bs</span>
-                        <button class="btn-add-cart" data-id="16" data-name="Matisse (gato castrado sabor cordero)" data-price="400">Añadir al carrito</button>
+                        <button class="btn-add-cart" data-id="22" data-name="Matisse (gato castrado sabor cordero)" data-price="400">Añadir al carrito</button>
                     </div>
                 </div>
-    
+        
+                <div class="item" data-name="ktito adulto carne">
+                    <figure>
+                        <img src="imagenes gato/katito adulto carne.jpeg" alt="Ktito adulto carne">
+                    </figure>
+                    <div class="info">
+                        <div class="info-header">
+                            <h2>Ktito (adulto sabor carne)</h2>
+                            <i class="fas fa-info-circle info-icon" data-info="ktito-adulto-carne"></i>
+                        </div>
+                        <div class="ingredients-info" id="ktito-adulto-carne">
+                            <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                        </div>
+                        <span class="price">400 bs</span>
+                        <button class="btn-add-cart" data-id="23" data-name="Ktito (adulto sabor carne)" data-price="400">Añadir al carrito</button>
+                    </div>
+                </div>
+        
+                <div class="item" data-name="ktito adulto leche">
+                    <figure>
+                        <img src="imagenes gato/katito adulto sabor leche.jpeg" alt="Ktito adulto leche">
+                    </figure>
+                    <div class="info">
+                        <div class="info-header">
+                            <h2>Ktito (adulto sabor leche)</h2>
+                            <i class="fas fa-info-circle info-icon" data-info="ktito-adulto-leche"></i>
+                        </div>
+                        <div class="ingredients-info" id="ktito-adulto-leche">
+                            <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                        </div>
+                        <span class="price">400 bs</span>
+                        <button class="btn-add-cart" data-id="24" data-name="Ktito (adulto sabor leche)" data-price="400">Añadir al carrito</button>
+                    </div>
+                </div>
+                
+                <div class="item" data-name="ktito cachorro">
+                    <figure>
+                        <img src="imagenes gato/katito cachorro.jpeg" alt="Ktito cachorro">
+                    </figure>
+                    <div class="info">
+                        <div class="info-header">
+                            <h2>Ktito (cachorro)</h2>
+                            <i class="fas fa-info-circle info-icon" data-info="ktito-cachorro"></i>
+                        </div>
+                        <div class="ingredients-info" id="ktito-cachorro">
+                            <p><strong>Ingredientes:</strong> Harina de subproductos de pollo, maíz molido, gluten de maíz, harina de trigo, grasa animal preservada con tocoferoles mixtos, harina de pescado, pulidura de arroz, saborizante natural, cloruro de potasio, cloruro de sodio, carbonato de calcio, fosfato monocálcico, vitaminas y minerales.</p>
+                        </div>
+                        <span class="price">400 bs</span>
+                        <button class="btn-add-cart" data-id="25" data-name="Ktito (cachorro)" data-price="400">Añadir al carrito</button>
+                    </div>
+                </div>
+        
                 <div class="no-results">
                     <p>No se encontraron productos que coincidan con tu búsqueda</p>
                 </div>
             </div>
-        </div>
         
         <!-- Contenido de Accesorios para Perros -->
         <div class="tab-content" id="dog-accessories">
@@ -1383,32 +1574,52 @@
         filterProducts(this.value);
     });
 
-    // Cambiar pestañas
+    // Cambiar pestañas (función corregida)
+    function showTab(tabId) {
+        // Ocultar todos los contenidos de pestañas
+        tabContents.forEach(content => {
+            content.classList.remove('active');
+        });
+        
+        // Mostrar solo la pestaña seleccionada
+        const selectedTab = document.getElementById(tabId);
+        if (selectedTab) {
+            selectedTab.classList.add('active');
+        }
+        
+        // Actualizar botones activos
+        tabBtns.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-tab') === tabId) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Reaplicar filtro si hay búsqueda
+        if (searchInput.value) {
+            filterProducts(searchInput.value);
+        }
+    }
+
+    // Configurar event listeners para pestañas
     tabBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             const tabId = this.getAttribute('data-tab');
-            
-            tabBtns.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            
-            tabContents.forEach(content => content.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            
-            if (searchInput.value) {
-                filterProducts(searchInput.value);
-            }
+            showTab(tabId);
         });
     });
+
+    // Mostrar la pestaña activa por defecto
+    showTab('dog-food');
 
     // Añadir productos al carrito
     btnAddToCart.forEach(btn => {
         btn.addEventListener('click', function() {
             const baseId = this.getAttribute('data-id');
-            const uniqueId = baseId + '-' + Math.random().toString(36).substr(2, 9); // ID único
+            const uniqueId = baseId + '-' + Math.random().toString(36).substr(2, 9);
             const name = this.getAttribute('data-name');
             const price = parseFloat(this.getAttribute('data-price'));
 
-            // Buscar producto existente con mismo nombre y precio
             const existingProductIndex = cart.findIndex(item => 
                 item.name === name && item.price === price
             );
@@ -1478,7 +1689,7 @@
         return mensaje;
     }
 
-    // Realizar pedido (con historial)
+    // Realizar pedido
     btnPedir.addEventListener('click', function() {
         if (cart.length === 0) {
             showNotification('El carrito está vacío');
@@ -1518,7 +1729,7 @@
     // Función para guardar en el historial
     function saveToPurchaseHistory(purchase) {
         let history = JSON.parse(localStorage.getItem('purchaseHistory')) || [];
-        history.unshift(purchase); // Agregar al inicio del array
+        history.unshift(purchase);
         localStorage.setItem('purchaseHistory', JSON.stringify(history));
     }
 
